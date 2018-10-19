@@ -11,10 +11,11 @@ namespace Emerson_Excel_Tool
     public class DataSet_Processing
     {
         private DataSet _vallenLogs = new DataSet("Vallen Logs");
-        private string _tableName;
-        private string _tableFileLocation;
+        //private string _tableName;
+        //private string _tableFileLocation;
         public DataSet_Processing()  //initializes an instance of the class
         {
+            
         }
         
 
@@ -35,19 +36,10 @@ namespace Emerson_Excel_Tool
             return _vallenLogs;
             }
         }
-        public string tableName
-        {
-            get
-            { return _tableName; }
-            set
-            { _tableName = value; }
-        }
-        public string tableFileLocation
-        { get
-            { return _tableFileLocation; }
-            set
-            { _tableFileLocation = value; }
-        }
+        public string tableName { get; set; }
+        public string tableFileLocation { get; set; }
+
+
         ///This section includes the code for implementing the data set and its tables.
         ///
 
@@ -58,7 +50,7 @@ namespace Emerson_Excel_Tool
         {
 
             DataSet_Processing instance = new DataSet_Processing(); /////GOT HUNGUP HERE BADLY! READ MORE.
-            dt = instance.CreateDataTableFromFile("somename", _tableFileLocation);  //TODO come back and use name field
+            dt = instance.CreateDataTableFromFile("somename", tableFileLocation);  //TODO come back and use name field
             results = new string[dt.Rows.Count, dt.Columns.Count];
             for (int index = 0; index < dt.Rows.Count; index++)
             {
