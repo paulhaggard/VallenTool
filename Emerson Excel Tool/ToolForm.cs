@@ -15,9 +15,9 @@ using System.Xml.Serialization;
 
 namespace Emerson_Excel_Tool
 {
-    public partial class Form1 : Form
+    public partial class ToolForm : Form
     {
-        public Form1()
+        public ToolForm()
         {
             InitializeComponent();
             InitializeOpenFileDialog();
@@ -253,7 +253,15 @@ namespace Emerson_Excel_Tool
         }
         #endregion
 
-
+        public struct CallMessageBox
+        {
+            public string message;
+            public CallMessageBox(string var)
+            {
+                message = var;
+                MessageBox.Show(message);
+            }
+        }
 
 
     }
