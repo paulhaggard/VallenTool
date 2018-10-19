@@ -1,0 +1,50 @@
+﻿                /*
+                // Create an array to multiple values at once.
+                string[,] saNames = new string[5, 2];
+
+                saNames[0, 0] = "John";
+                saNames[0, 1] = "Smith";
+                saNames[1, 0] = "Tom";
+                saNames[1, 1] = "Brown";
+                saNames[2, 0] = "Sue";
+                saNames[2, 1] = "Thomas";
+                saNames[3, 0] = "Jane";
+                saNames[3, 1] = "Jones";
+                saNames[4, 0] = "Adam";
+                saNames[4, 1] = "Johnson"; 
+                */
+
+                //Fill A2:B6 with an array of values (First and Last Names).
+                //oSheet.get_Range("A2", "B6").Value2 = saNames
+
+				                //DataSet_Processing dataset1 = new DataSet_Processing();
+                //dataset1.tableFileLocation = testFileList.ElementAt(0);
+                //dataset1.GetTableData(out dt, out results);
+
+
+                //oSheet.get_Range("A" + dt.Columns.Count, "B" + dt.Rows.Count).Value2 = results;
+
+                //DataSet_Processing dataset2 = new DataSet_Processing();
+                //dataset2.tableFileLocation = testFileList.ElementAt(1);
+                //dataset2.GetTableData(out dt, out results);
+
+                //oSheet.get_Range("C" + dt.Columns.Count, "D" + dt.Rows.Count).Value2 = results;
+                /*
+                //Fill C2:C6 with a relative formula (=A2 & " " & B2).
+                oRng = oSheet.get_Range("C2", "C6");
+                oRng.Formula = "=A2 & \" \" & B2";
+
+                //Fill D2:D6 with a formula(=RAND()*100000) and apply format.
+                oRng = oSheet.get_Range("D2", "D6");
+                oRng.Formula = "=RAND()*100000";
+                oRng.NumberFormat = "$0.00";
+
+                //AutoFit columns A:D.
+                oRng = oSheet.get_Range("A1", "D1");
+                oRng.EntireColumn.AutoFit();
+
+                //Manipulate a variable number of columns for Quarterly Sales Data.
+                DisplayQuarterlySales(oSheet);
+                */
+                //Make sure Excel is visible and give the user control
+                //of Microsoft Excel's lifetime.

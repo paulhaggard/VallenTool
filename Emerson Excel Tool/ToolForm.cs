@@ -121,7 +121,7 @@ namespace Emerson_Excel_Tool
                     }
 
             }
-            MessageBox.Show(Convert.ToString(selectedFileList.Length), "Selected files in array are:");
+            MessageBox.Show(Convert.ToString(selectedFileList.Length), "Selected file(s) count:");
             fileCount = testFileList.Count;
         }
         
@@ -253,6 +253,12 @@ namespace Emerson_Excel_Tool
         }
         #endregion
 
+
+        /// <summary>
+        /// Call a MessageBox on formless .cs by:
+        /// CallMessageBox $varname;
+        /// $varname.message = my message;
+        /// </summary>
         public struct CallMessageBox
         {
             public string message;
@@ -263,7 +269,7 @@ namespace Emerson_Excel_Tool
             }
         }
 
-
+        
     }
 }
 

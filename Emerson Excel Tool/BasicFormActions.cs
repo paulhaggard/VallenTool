@@ -16,7 +16,7 @@ namespace Emerson_Excel_Tool
 {
     public partial class ToolForm
     {
-        #region Actions
+        #region Actions: Remove from Listbox, Multifile add to Listbox, Init Dialogbox, Empty Listbox
 
         /// <summary>
         /// Action to remove items from listbox, including multi-selection
@@ -37,7 +37,7 @@ namespace Emerson_Excel_Tool
 
         /// <summary>
         /// Action to multi-select .txt files for processing. 
-        /// To be displaye din list box.
+        /// To be displayed in list box.
         /// </summary>
         private void FileSelectionHelper()
         {

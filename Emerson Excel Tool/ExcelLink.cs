@@ -25,153 +25,190 @@ namespace Emerson_Excel_Tool
 
         private void RunExcelProcess()
         {
+
             Excel.Application oXL;
             Excel._Workbook oWB;
             Excel._Worksheet oSheet;
             Excel.Range oRng;
 
             ExcelLauncher(out oXL, out oWB, out oSheet);
-            try
+            if (fileCount < 1)
             {
-                oXL.Visible = true;
-                oWB = (Excel._Workbook)(oXL.ActiveWorkbook);
-                oSheet = (Excel._Worksheet)oWB.ActiveSheet;
-
-                int columnNumb = 2 * fileCount;
-                for (int i = 0; i < columnNumb; i = i + 2)
-                {
-                    int j = i + 1;
-                    int k = i + 2;
-                    //Add table headers going cell by cell.
-                    oSheet.Cells[1, j] = "Frequency" + j;
-                    oSheet.Cells[1, k] = "Response" + j;
-                }
-
-                string letterVal = IndexToColumn(columnNumb);
-                //Format headers as bold, vertical alignment = center.
-                oSheet.get_Range("A1", letterVal + "1").Font.Bold = true;
-                oSheet.get_Range("A1", letterVal + "1").VerticalAlignment =
-                Excel.XlVAlign.xlVAlignCenter;
-
-
-                /*
-                // Create an array to multiple values at once.
-                string[,] saNames = new string[5, 2];
-
-                saNames[0, 0] = "John";
-                saNames[0, 1] = "Smith";
-                saNames[1, 0] = "Tom";
-                saNames[1, 1] = "Brown";
-                saNames[2, 0] = "Sue";
-                saNames[2, 1] = "Thomas";
-                saNames[3, 0] = "Jane";
-                saNames[3, 1] = "Jones";
-                saNames[4, 0] = "Adam";
-                saNames[4, 1] = "Johnson"; 
-                */
-
-                //Fill A2:B6 with an array of values (First and Last Names).
-                //oSheet.get_Range("A2", "B6").Value2 = saNames;
-
-                //attempt to fill excel with DT object.
-                DataTable dt;
-                string[,] results;
-
-                var listOfDataSets = new List<DataSet_Processing>();
-                for (int i = 0; i < fileCount; i++)
-                {
-                    listOfDataSets.Add(new DataSet_Processing { tableName = "File #" + (i + 1) });
-                }
-                int totalDataSetsLoaded = listOfDataSets.Count;
-                for (int i = 0; i < (2 * listOfDataSets.Count); i = i + 2)
-                {
-                    int j = 0;
-                    listOfDataSets.ElementAt<DataSet_Processing>(j).tableFileLocation = testFileList.ElementAt(j);
-                    listOfDataSets.ElementAt<DataSet_Processing>(j).GetTableData(out dt, out results);
-                    oSheet.get_Range(IndexToColumn(i+1) + dt.Columns.Count, IndexToColumn(i+2) + dt.Rows.Count).Value2 = results;
-                    j++;
-
-                }
-                //DataSet_Processing dataset1 = new DataSet_Processing();
-                //dataset1.tableFileLocation = testFileList.ElementAt(0);
-                //dataset1.GetTableData(out dt, out results);
-
-
-                //oSheet.get_Range("A" + dt.Columns.Count, "B" + dt.Rows.Count).Value2 = results;
-
-                //DataSet_Processing dataset2 = new DataSet_Processing();
-                //dataset2.tableFileLocation = testFileList.ElementAt(1);
-                //dataset2.GetTableData(out dt, out results);
-
-                //oSheet.get_Range("C" + dt.Columns.Count, "D" + dt.Rows.Count).Value2 = results;
-                /*
-                //Fill C2:C6 with a relative formula (=A2 & " " & B2).
-                oRng = oSheet.get_Range("C2", "C6");
-                oRng.Formula = "=A2 & \" \" & B2";
-
-                //Fill D2:D6 with a formula(=RAND()*100000) and apply format.
-                oRng = oSheet.get_Range("D2", "D6");
-                oRng.Formula = "=RAND()*100000";
-                oRng.NumberFormat = "$0.00";
-
-                //AutoFit columns A:D.
-                oRng = oSheet.get_Range("A1", "D1");
-                oRng.EntireColumn.AutoFit();
-
-                //Manipulate a variable number of columns for Quarterly Sales Data.
-                DisplayQuarterlySales(oSheet);
-                */
-                //Make sure Excel is visible and give the user control
-                //of Microsoft Excel's lifetime.
-                oXL.Visible = true;
-                oXL.UserControl = true;
+                MessageBox.Show("No data selected to import!", "Error");
             }
-            catch (Exception theException)
+            else
             {
-                String errorMessage;
-                errorMessage = "Error: ";
-                errorMessage = String.Concat(errorMessage, theException.Message);
-                errorMessage = String.Concat(errorMessage, " Line: ");
-                errorMessage = String.Concat(errorMessage, theException.Source);
+                try
+                {
+                    oXL.Visible = true;
+                    oWB = (Excel._Workbook)(oXL.ActiveWorkbook);
+                    oSheet = (Excel._Worksheet)oWB.ActiveSheet;
 
-                MessageBox.Show(errorMessage, "Error");
+                    int columnNumb = 2 * fileCount;
+                    for (int i = 0; i < columnNumb; i = i + 2)
+                    {
+                        int j = i + 1;
+                        int k = i + 2;
+                        //Add table headers going cell by cell.
+                        oSheet.Cells[1, j] = "Frequency" + j;
+                        oSheet.Cells[1, k] = "Response" + j;
+                    }
+
+                    string letterVal = IndexToColumn(columnNumb);
+                    //Format headers as bold, vertical alignment = center.
+                    oSheet.get_Range("A1", letterVal + "1").Font.Bold = true;
+                    oSheet.get_Range("A1", letterVal + "1").VerticalAlignment =
+                    Excel.XlVAlign.xlVAlignCenter;
+
+
+
+
+                    //attempt to fill excel with DT object.
+                    DataTable dt;
+                    string[,] results;
+
+                    var listOfDataSets = new List<DataSet_Processing>();
+
+                    for (int i = 0; i < fileCount; i++)
+                    {
+                        listOfDataSets.Add(new DataSet_Processing { tableName = "File #" + (i + 1) });
+                    }
+                    int totalDataSetsLoaded = listOfDataSets.Count;
+                    for (int i = 0; i < (2 * listOfDataSets.Count); i = i + 2)
+                    {
+                        int j = 0;
+                        listOfDataSets.ElementAt<DataSet_Processing>(j).tableFileLocation = testFileList.ElementAt(j);
+                        listOfDataSets.ElementAt<DataSet_Processing>(j).GetTableData(out dt, out results);
+                        oSheet.get_Range(IndexToColumn(i + 1) + dt.Columns.Count, IndexToColumn(i + 2) + dt.Rows.Count).Value2 = results;
+                        j++;
+
+                    }
+
+                    oXL.Visible = true;
+                    oXL.UserControl = true;
+
+
+                }
+                catch (Exception theException)
+                {
+                    String errorMessage;
+                    errorMessage = "Error: ";
+                    errorMessage = String.Concat(errorMessage, theException.Message);
+                    errorMessage = String.Concat(errorMessage, " Line: ");
+                    errorMessage = String.Concat(errorMessage, theException.Source);
+
+                    MessageBox.Show(errorMessage, "Error");
+                }
             }
         }
 
 
+        /// <summary>
+        /// Launch Excel/Open if Launched.  Clear Sheet1 before import.
+        /// </summary>
+        /// <param name="oXL">Excel instance</param>
+        /// <param name="oWB">Workbook Name</param> Hard Coded to vallen.xlsx, relative location
+        /// <param name="oSheet">Worksheet Name</param>
         private static void ExcelLauncher(out Excel.Application oXL, out Excel._Workbook oWB, out Excel._Worksheet oSheet)
         {
-
-            object[] ExcelFileName = new object[1];
-
-            ExcelFileName[0] = new { Filename = "vallen.xlsx" };
             string filenameS = "vallen.xlsx";
-            try
+            bool AppisOpened = true;
+            bool WBisOpened = true;
+            //test if App is open, else open it.
+            string AppwasOpen = XLAppIsOpen().ToString();
+            //test if WB is open. else, do nothing
+            string WBwasOpen = WbIsOpened(filenameS).ToString();
+            //if WB isn't open, try opening.  Else, try creating.
+            if (!WbIsOpened(filenameS))
             {
-                oXL = (Excel.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
-                oWB = (Excel._Workbook)(oXL.Workbooks.Open(filenameS));
-                MessageBox.Show("Excel is running. Active workbook is:" + oXL.ActiveWorkbook.Name, "Already Running");
-                oSheet = (Excel._Worksheet)oWB.ActiveSheet;
-                //If there is a running Excel instance, it gets saved into the oXL variable
+                try
+                {
+                    oXL = (Excel.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
+                    MessageBox.Show("Opening workbook.", "XLS is Open, Get WB"); //oXL.ActiveWorkbook.Name
+                    oWB = (oXL.Workbooks.Open(filenameS));
+                    oSheet = (Excel._Worksheet)oWB.ActiveSheet;
+                    oSheet.Cells.Clear();
+                }
+                catch (COMException ex)
+                {
+                    oXL = (Excel.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
+                    oXL.Visible = true;
+                    MessageBox.Show("Excel started. Active workbook being created: " + oXL.ActiveWorkbook.Name, " ...");
+                    oWB = (Excel._Workbook)(oXL.Workbooks.Add(Missing.Value));
+                    oWB.SaveAs(filenameS, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Excel.XlSaveAsAccessMode.xlNoChange, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Missing.Value);
+                    oSheet = (Excel._Worksheet)oWB.ActiveSheet;
+                    MessageBox.Show("COM Exception caught: " + ex.Message.ToString());
+                }
             }
-            catch (COMException ex)
+            //if WB is open, try setting our variables and clearing the active sheet, else try creating new WB (should never occur);
+            else
             {
-                //If there is no running instance, it creates a new one
-                //Type type = Type.GetTypeFromProgID("Word.Application");
-                //word = System.Activator.CreateInstance(type);
+                try
+                {
+                    oXL = (Excel.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
+                    oWB = (oXL.Workbooks.get_Item(filenameS));
+                    MessageBox.Show("Excel was running. Active workbook is:" + oXL.ActiveWorkbook.Name, "Already Running");
+                    oSheet = (Excel._Worksheet)oWB.ActiveSheet;
+                    oSheet.Cells.Clear();
+                }
+                catch (COMException ex)
+                {
+                    oXL = (Excel.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
 
-                oXL = new Excel.Application();
-                oXL.Visible = true;
-                oWB = (Excel._Workbook)(oXL.Workbooks.Add(Missing.Value));
-
-                oWB.SaveAs(filenameS, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Excel.XlSaveAsAccessMode.xlNoChange, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Missing.Value);
-                oSheet = (Excel._Worksheet)oWB.ActiveSheet;
-                MessageBox.Show("Excel started. Active workbook is:" + oXL.ActiveWorkbook.Name, "Started Excel.");
-                MessageBox.Show(ex.Message.ToString());
+                    oXL.Visible = true;
+                    oWB = (Excel._Workbook)(oXL.Workbooks.Add(Missing.Value));
+                    oWB.SaveAs(filenameS, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Excel.XlSaveAsAccessMode.xlNoChange, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Missing.Value);
+                    oSheet = (Excel._Worksheet)oWB.ActiveSheet;
+                    MessageBox.Show("Major Code Failure. Continuing. " + oXL.ActiveWorkbook.Name, "Started Excel.");
+                    MessageBox.Show(ex.Message.ToString());
+                }
             }
+
+
+
+
+            bool WbIsOpened(string wbook)
+            {
+
+                Excel.Application exApp;
+                exApp = (Excel.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
+                try
+                {
+                    exApp.Workbooks.get_Item(wbook);
+                }
+                catch (Exception)
+                {
+                    WBisOpened = false;
+                }
+                return WBisOpened;
+            }
+            bool XLAppIsOpen()
+            {
+                Excel._Application xlObj;
+                Excel._Workbook oWBinternal;
+                Excel._Worksheet oSheetinternal;
+                try
+                {
+
+                    xlObj = (Excel._Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
+
+                }
+                catch (COMException ex)
+                {
+                    //If there is no running instance, it creates a new one
+                    //Type type = Type.GetTypeFromProgID("Word.Application");
+                    //word = System.Activator.CreateInstance(type);
+
+                    xlObj = new Excel.Application();
+
+                }
+                return AppisOpened;
+            }
+            //object[] ExcelFileName = new object[1];
+            //ExcelFileName[0] = new { Filename = "vallen.xlsx" };
+
 
         }
-
 
 
 
@@ -243,7 +280,7 @@ namespace Emerson_Excel_Tool
             Missing.Value, Missing.Value);
 
             //Use the ChartWizard to create a new chart from the selected data.
-            oResizeRange = oWS.get_Range("E2:E6", Missing.Value).get_Resize(
+            oResizeRange = oWS.get_Range("A15:E489", Missing.Value).get_Resize(
             Missing.Value, iNumQtrs);
             oChart.ChartWizard(oResizeRange, Excel.XlChartType.xl3DColumn, Missing.Value,
             Excel.XlRowCol.xlColumns, Missing.Value, Missing.Value, Missing.Value,
