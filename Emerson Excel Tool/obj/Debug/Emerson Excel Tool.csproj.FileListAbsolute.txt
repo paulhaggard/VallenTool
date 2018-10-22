@@ -9,3 +9,14 @@ C:\External\CS code\AEsensorImporter\DesktopApp1\Emerson Excel Tool\obj\Debug\Em
 C:\External\CS code\AEsensorImporter\DesktopApp1\Emerson Excel Tool\obj\Debug\Emerson Excel Tool.exe
 C:\External\CS code\AEsensorImporter\DesktopApp1\Emerson Excel Tool\obj\Debug\Emerson Excel Tool.pdb
 C:\External\CS code\AEsensorImporter\DesktopApp1\Emerson Excel Tool\obj\Debug\Emerson Excel Tool.csprojAssemblyReference.cache
+C:\External\CS code\VallenTool\Emerson Excel Tool\bin\Debug\Emerson Excel Tool.exe.config
+C:\External\CS code\VallenTool\Emerson Excel Tool\bin\Debug\Emerson Excel Tool.exe
+C:\External\CS code\VallenTool\Emerson Excel Tool\bin\Debug\Emerson Excel Tool.pdb
+C:\External\CS code\VallenTool\Emerson Excel Tool\obj\Debug\Emerson Excel Tool.csprojAssemblyReference.cache
+C:\External\CS code\VallenTool\Emerson Excel Tool\obj\Debug\Emerson Excel Tool.csproj.ResolveComReference.cache
+C:\External\CS code\VallenTool\Emerson Excel Tool\obj\Debug\Emerson_Excel_Tool.Properties.Resources.resources
+C:\External\CS code\VallenTool\Emerson Excel Tool\obj\Debug\Emerson Excel Tool.csproj.GenerateResource.cache
+C:\External\CS code\VallenTool\Emerson Excel Tool\obj\Debug\Emerson Excel Tool.csproj.CoreCompileInputs.cache
+C:\External\CS code\VallenTool\Emerson Excel Tool\obj\Debug\Emerson Excel Tool.exe
+C:\External\CS code\VallenTool\Emerson Excel Tool\obj\Debug\Emerson Excel Tool.pdb
+C:\External\CS code\VallenTool\Emerson Excel Tool\obj\Debug\Emerson_Excel_Tool.ToolForm.resources

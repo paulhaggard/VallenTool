@@ -1,6 +1,6 @@
 ﻿namespace Emerson_Excel_Tool
 {
-    partial class Form1
+    partial class ToolForm
     {
         /// <summary>
         /// Required designer variable.
