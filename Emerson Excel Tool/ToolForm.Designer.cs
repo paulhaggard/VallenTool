@@ -31,7 +31,7 @@
             this.helloWorldLabel = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.FilesSelected = new System.Windows.Forms.ListBox();
+            this.FileSelectionListBox = new System.Windows.Forms.ListBox();
             this.InputText = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.openFilesButton = new System.Windows.Forms.Button();
@@ -87,21 +87,21 @@
             this.openFileDialog1.SupportMultiDottedExtensions = true;
             this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog1_FileOk);
             // 
-            // FilesSelected
+            // FileSelectionListBox
             // 
-            this.FilesSelected.AllowDrop = true;
-            this.FilesSelected.BackColor = System.Drawing.SystemColors.Window;
-            this.FilesSelected.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.FilesSelected.FormattingEnabled = true;
-            this.FilesSelected.HorizontalScrollbar = true;
-            this.FilesSelected.Location = new System.Drawing.Point(0, 0);
-            this.FilesSelected.Name = "FilesSelected";
-            this.FilesSelected.ScrollAlwaysVisible = true;
-            this.FilesSelected.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.FilesSelected.Size = new System.Drawing.Size(625, 424);
-            this.FilesSelected.Sorted = true;
-            this.FilesSelected.TabIndex = 5;
-            this.FilesSelected.SelectedIndexChanged += new System.EventHandler(this.FilesSelected_SelectedIndexChanged);
+            this.FileSelectionListBox.AllowDrop = true;
+            this.FileSelectionListBox.BackColor = System.Drawing.SystemColors.Window;
+            this.FileSelectionListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.FileSelectionListBox.FormattingEnabled = true;
+            this.FileSelectionListBox.HorizontalScrollbar = true;
+            this.FileSelectionListBox.Location = new System.Drawing.Point(0, 0);
+            this.FileSelectionListBox.Name = "FileSelectionListBox";
+            this.FileSelectionListBox.ScrollAlwaysVisible = true;
+            this.FileSelectionListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.FileSelectionListBox.Size = new System.Drawing.Size(625, 424);
+            this.FileSelectionListBox.Sorted = true;
+            this.FileSelectionListBox.TabIndex = 5;
+            this.FileSelectionListBox.SelectedIndexChanged += new System.EventHandler(this.FilesSelected_SelectedIndexChanged);
             // 
             // InputText
             // 
@@ -159,8 +159,8 @@
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.splitContainer1.Location = new System.Drawing.Point(-1, 51);
             this.splitContainer1.Name = "splitContainer1";
@@ -171,7 +171,7 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.FilesSelected);
+            this.splitContainer1.Panel2.Controls.Add(this.FileSelectionListBox);
             this.splitContainer1.Size = new System.Drawing.Size(943, 424);
             this.splitContainer1.SplitterDistance = 314;
             this.splitContainer1.TabIndex = 14;
@@ -196,7 +196,7 @@
             this.testbuttn2.UseVisualStyleBackColor = true;
             this.testbuttn2.Click += new System.EventHandler(this.testbuttn2_Click);
             // 
-            // Form1
+            // ToolForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -213,8 +213,9 @@
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MinimumSize = new System.Drawing.Size(962, 563);
-            this.Name = "Form1";
+            this.Name = "ToolForm";
             this.Text = "The Emerson <Vallen Tests> Importer Exporter";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ToolForm_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
@@ -231,7 +232,7 @@
         private System.Windows.Forms.Label helloWorldLabel;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.ListBox FilesSelected;
+        private System.Windows.Forms.ListBox FileSelectionListBox;
         private System.Windows.Forms.TextBox InputText;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button openFilesButton;

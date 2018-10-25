@@ -23,7 +23,7 @@ namespace Emerson_Excel_Tool
         //"http://aka.ms/dotnet-get-started-desktop");
 
 
-        private void RunExcelProcess()
+        public class ExcelProcess
         {
 
             Excel.Application oXL;
@@ -31,73 +31,122 @@ namespace Emerson_Excel_Tool
             Excel._Worksheet oSheet;
             Excel.Range oRng;
 
-            ExcelLauncher(out oXL, out oWB, out oSheet);
-            if (fileCount < 1)
+            public ExcelProcess()
             {
-                MessageBox.Show("No data selected to import!", "Error");
+                ExcelLauncher(out oXL, out oWB, out oSheet);
+                oXL.Visible = true;
+                oWB = (Excel.Workbook)(oXL.ActiveWorkbook);
+                oSheet = (Excel.Worksheet)oWB.ActiveSheet;
             }
-            else
+            
+
+
+            public void Close()
             {
-                try
+                oXL.Visible = true;
+                bool SaveChanges;
+                oWB.Close(SaveChanges = false,Type.Missing , Type.Missing);
+                oXL.Quit();
+            }
+
+            public void Launch()
+            {
+                if (selectedFilesCount < 1)
                 {
-                    oXL.Visible = true;
-                    oWB = (Excel._Workbook)(oXL.ActiveWorkbook);
-                    oSheet = (Excel._Worksheet)oWB.ActiveSheet;
-
-                    int columnNumb = 2 * fileCount;
-                    for (int i = 0; i < columnNumb; i = i + 2)
-                    {
-                        int j = i + 1;
-                        int k = i + 2;
-                        //Add table headers going cell by cell.
-                        oSheet.Cells[1, j] = "Frequency" + j;
-                        oSheet.Cells[1, k] = "Response" + j;
-                    }
-
-                    string letterVal = IndexToColumn(columnNumb);
-                    //Format headers as bold, vertical alignment = center.
-                    oSheet.get_Range("A1", letterVal + "1").Font.Bold = true;
-                    oSheet.get_Range("A1", letterVal + "1").VerticalAlignment =
-                    Excel.XlVAlign.xlVAlignCenter;
-
-
-
-
-                    //attempt to fill excel with DT object.
-                    DataTable dt;
-                    string[,] results;
-
-                    var listOfDataSets = new List<DataSet_Processing>();
-
-                    for (int i = 0; i < fileCount; i++)
-                    {
-                        listOfDataSets.Add(new DataSet_Processing { tableName = "File #" + (i + 1) });
-                    }
-                    int totalDataSetsLoaded = listOfDataSets.Count;
-                    for (int i = 0; i < (2 * listOfDataSets.Count); i = i + 2)
-                    {
-                        int j = 0;
-                        listOfDataSets.ElementAt<DataSet_Processing>(j).tableFileLocation = testFileList.ElementAt(j);
-                        listOfDataSets.ElementAt<DataSet_Processing>(j).GetTableData(out dt, out results);
-                        oSheet.get_Range(IndexToColumn(i + 1) + dt.Columns.Count, IndexToColumn(i + 2) + dt.Rows.Count).Value2 = results;
-                        j++;
-
-                    }
-
-                    oXL.Visible = true;
-                    oXL.UserControl = true;
-
-
+                    MessageBox.Show("No data selected to import!", "Error");
                 }
-                catch (Exception theException)
+                else
                 {
-                    String errorMessage;
-                    errorMessage = "Error: ";
-                    errorMessage = String.Concat(errorMessage, theException.Message);
-                    errorMessage = String.Concat(errorMessage, " Line: ");
-                    errorMessage = String.Concat(errorMessage, theException.Source);
+                    try
+                    {
 
-                    MessageBox.Show(errorMessage, "Error");
+
+                        //creates sheets labeled 1-4
+                        //for (int i = 1; i < 5; i++)
+                        //{
+                        //    int count = oWB.Worksheets.Count;
+                        //    Excel.Worksheet addedSheet = oWB.Worksheets.Add(Type.Missing,
+                        //            oWB.Worksheets[count], Type.Missing, Type.Missing);
+                        //    addedSheet.Name = i.ToString();
+                        //}
+
+                        /*By doing the following, you will create a named range(Transactions) on the oSheet staring at cell A1 and finising at cell C3
+
+                Range namedRange = oSheet.Range[oSheet.Cells[1, 1], oSheet.Cells[3, 3]];
+                oSheet.Names.Add("Transactions", newRange);
+                        namedRange.Name = "Transactions";*/
+
+
+
+                        int columnNumb = 2 * selectedFilesCount;
+                        for (int i = 0; i < selectedFilesCount; i++)
+                        {
+
+                            int j = (2 * i) + 1;
+                            int k = (2 * i) + 2;
+                            //Add table headers going cell by cell.
+                            oSheet.Cells[1, j] = "Frequency" + (1 + i);
+                            oSheet.Cells[1, k] = "Response" + (1 + i);
+                        }
+
+                        string letterVal = IndexToColumn(columnNumb);
+
+
+                        //FORMATTING
+                        //Format headers as bold, vertical alignment = center.
+                        oSheet.get_Range("A1", letterVal + "1").Font.Bold = true;
+                        oSheet.get_Range("A1", letterVal + "1").VerticalAlignment =
+                            Excel.XlVAlign.xlVAlignCenter;
+                        oSheet.get_Range("A1", letterVal + "1").ColumnWidth = 18;
+
+
+
+                        //attempt to fill excel with DataTables object.
+                        DataTable dt;
+                        string[,] results;
+
+                        var listOfDataSets = new List<DataSet_Processing>();
+
+                        for (int i = 0; i < selectedFilesCount; i++)
+                        {
+                            listOfDataSets.Add(new DataSet_Processing { tableName = "File #" + (i + 1) });
+                        }
+                        int totalDataSetsLoaded = listOfDataSets.Count;
+                        int _filecounter = 0;
+                        for (int i = 0; i < (2 * listOfDataSets.Count); i = i + 2)
+                        {
+
+                            listOfDataSets.ElementAt<DataSet_Processing>(_filecounter).tableFileLocation = testFileList.ElementAt(_filecounter);
+                            listOfDataSets.ElementAt<DataSet_Processing>(_filecounter).tableName = Path.GetFileName(testFileList.ElementAt(_filecounter));
+                            listOfDataSets.ElementAt<DataSet_Processing>(_filecounter).GetTableData(out dt, out results);
+                            oSheet.get_Range(IndexToColumn(i + 1) + dt.Columns.Count, IndexToColumn(i + 2) + dt.Rows.Count).Value2 = results;
+                            _filecounter++;
+
+                        }
+
+                        oRng = oSheet.Range["A1:D489"];
+                        Object[,] transposedRange = (Object[,])oXL.WorksheetFunction.Transpose(oRng.Value2);
+                        Excel.Worksheet oSheet2;
+                        oSheet2 = oWB.Worksheets.Add();
+                        oSheet2.Name = "Sheet2";
+                        oSheet2.Select();
+                        oXL.ActiveSheet.Range["A1:B4"].Resize[transposedRange.GetUpperBound(0), transposedRange.GetUpperBound(1)] = transposedRange;
+
+                        oXL.Visible = true;
+                        oXL.UserControl = true;
+
+
+                    }
+                    catch (Exception theException)
+                    {
+                        String errorMessage;
+                        errorMessage = "Error: ";
+                        errorMessage = String.Concat(errorMessage, theException.Message);
+                        errorMessage = String.Concat(errorMessage, " Line: ");
+                        errorMessage = String.Concat(errorMessage, theException.Source);
+
+                        MessageBox.Show(errorMessage, "Error");
+                    }
                 }
             }
         }
@@ -220,12 +269,15 @@ namespace Emerson_Excel_Tool
 
         private void DisplayQuarterlySales(Excel._Worksheet oWS)
         {
+
             Excel._Workbook oWB;
             Excel.Series oSeries;
             Excel.Range oResizeRange;
             Excel._Chart oChart;
             String sMsg;
             int iNumQtrs;
+
+
 
             //Determine how many quarters to display data for.
             for (iNumQtrs = 4; iNumQtrs >= 2; iNumQtrs--)

@@ -19,21 +19,20 @@ namespace Emerson_Excel_Tool
     {
         public ToolForm()
         {
+            // Set a few initial forms configuration settings
             InitializeComponent();
-            InitializeOpenFileDialog();
+            InitializeOpenFileDialog();       
         }
 
 
-        public List<string> testFileList = new List<string>();
-        public string testFileLocation = @"C:\Projects\2007 - Emerson AE\08. Testing\Paul Report Writing\Vallen Sensor Tests\296 a-b\VS900-RIC - oil - vallen reset.r216.txt";
+        // Create an Excel Interop Object to be used for all excel interactions.
+        ExcelProcess excelObject = new ExcelProcess();
 
-        #region Unused Form Objects for Events
-        //is this Form1 Load 1 needed? review.
-        private void Form1_Load_1(object sender, EventArgs e)
-        {
-
-        }
-
+        // Create a list to store our files for Excel processing
+        public static List<string> testFileList = new List<string>();
+        
+        #region Unused Form Objects/Buttons for Events
+        
         private void Form1_Load(object sender, EventArgs e)
         {
 
@@ -91,7 +90,7 @@ namespace Emerson_Excel_Tool
         ///
         ///
 
-        public int fileCount { get; set; }
+        public static int selectedFilesCount { get; set; }
 
         /// <summary>
         /// Count and identify which file paths have been chosen.
@@ -99,30 +98,30 @@ namespace Emerson_Excel_Tool
         public void SetFileToProcess()
         {
             //Select all imported files.  Yes, this is dumb.
-            FilesSelected.Visible = false;
-            for (int i = 0; i < FilesSelected.Items.Count; i++)
+            FileSelectionListBox.Visible = false;
+            for (int i = 0; i < FileSelectionListBox.Items.Count; i++)
             {
-                FilesSelected.SetSelected(i, true);
+                FileSelectionListBox.SetSelected(i, true);
             }
-            FilesSelected.Visible = true;
+            FileSelectionListBox.Visible = true;
             //Create array and fill with the strings of each file location
-            String[] selectedFileList = new string[FilesSelected.Items.Count];
-            FilesSelected.SelectedItems.CopyTo(selectedFileList, 0);
+            String[] selectedFilesList = new string[FileSelectionListBox.Items.Count];
+            FileSelectionListBox.SelectedItems.CopyTo(selectedFilesList, 0);
             //Add each line of this array to a list.  Why?  Why not.
-            for (int i = 0; i < selectedFileList.Length; i++)
+            for (int i = 0; i < selectedFilesList.Length; i++)
             {
 
-                if (!testFileList.Any(e => e.Equals(selectedFileList[i])))  //add only if DNE
-                    if (!String.IsNullOrEmpty(selectedFileList[i]))
+                if (!testFileList.Any(e => e.Equals(selectedFilesList[i])))  //add only if DNE
+                    if (!String.IsNullOrEmpty(selectedFilesList[i]))
                     {
                         {
-                            testFileList.Add(selectedFileList[i]);
+                            testFileList.Add(selectedFilesList[i]);
                         }
                     }
 
             }
-            MessageBox.Show(Convert.ToString(selectedFileList.Length), "Selected file(s) count:");
-            fileCount = testFileList.Count;
+            //MessageBox.Show(Convert.ToString(selectedFilesList.Length), "Selected file(s) count:");
+            selectedFilesCount = testFileList.Count;
         }
         
         #endregion
@@ -151,47 +150,48 @@ namespace Emerson_Excel_Tool
         #region Reading .txt line by line
 
 
-        public void ReadTextFile()
-        {
-            string line;
-            try
-            {
-                this.InputText.Clear();
-                //Pass the file path and file name to the StreamReader constructor
-                StreamReader sr = new StreamReader("C:\\temp\\Jamaica.txt");
+        /* 
+         * public void ReadTextFile()
+         {
+             string line;
+             try
+             {
+                 this.InputText.Clear();
+                 //Pass the file path and file name to the StreamReader constructor
+                 StreamReader sr = new StreamReader("C:\\temp\\Jamaica.txt");
 
-                //Read the first line of text
-                line = sr.ReadLine();
+                 //Read the first line of text
+                 line = sr.ReadLine();
 
-                //Continue to read until you reach end of file
-                while (line != null)
-                {
-                    //write the lie to console window
-                    //this.InputText.SelectionStart = InputText.Text.Length;
+                 //Continue to read until you reach end of file
+                 while (line != null)
+                 {
+                     //write the lie to console window
+                     //this.InputText.SelectionStart = InputText.Text.Length;
 
-                    this.InputText.AppendText(line);
-                    this.InputText.AppendText(Environment.NewLine);
+                     this.InputText.AppendText(line);
+                     this.InputText.AppendText(Environment.NewLine);
 
-                    //Read the next line
-                    line = sr.ReadLine();
-                }
+                     //Read the next line
+                     line = sr.ReadLine();
+                 }
 
-                //close the file
-                sr.Close();
-                String dt;
-                DataSet_Processing instance = new DataSet_Processing();
-                instance.CreateDataTableFromFile(testFileLocation, testFileLocation);  ///create the table, this is expecting a table name, too
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("Exception: " + e.Message);
-            }
-            finally
-            {
-                MessageBox.Show("Executing finally block.");
-            }
-        }
-
+                 //close the file
+                 sr.Close();
+                 String dt;
+                 DataSet_Processing instance = new DataSet_Processing();
+                 instance.CreateDataTableFromFile(testFileLocation, testFileLocation);  ///create the table, this is expecting a table name, too
+             }
+             catch (Exception e)
+             {
+                 MessageBox.Show("Exception: " + e.Message);
+             }
+             finally
+             {
+                 MessageBox.Show("Executing finally block.");
+             }
+         }
+         */
 
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace Emerson_Excel_Tool
 
         #endregion
 
-        #region Buttons
+        #region Active Buttons
 
         private void testbuttn_Click(object sender, EventArgs e)
         {
@@ -242,7 +242,7 @@ namespace Emerson_Excel_Tool
         private void runExcelBtn(object sender, System.EventArgs e)
         {
             SetFileToProcess();
-            RunExcelProcess();
+            excelObject.Launch();
             EmptyTheFileList();
         }
 
@@ -251,25 +251,14 @@ namespace Emerson_Excel_Tool
             MessageBox.Show("This is a file processing tool built to provide fast, comparative testing of Vallen acoustic emission sensor tests.  " +
                 "It works with .txt files (produced by the Vallen test equipment) and processes them in Excel.", "About the Emerson Tool");
         }
-        #endregion
 
-
-        /// <summary>
-        /// Call a MessageBox on formless .cs by:
-        /// CallMessageBox $varname;
-        /// $varname.message = my message;
-        /// </summary>
-        public struct CallMessageBox
+        private void ToolForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            public string message;
-            public CallMessageBox(string var)
-            {
-                message = var;
-                MessageBox.Show(message);
-            }
+            excelObject.Close();
         }
 
-        
+        #endregion
+
     }
 }
 

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Reflection;
 using System.Xml;
@@ -24,14 +25,14 @@ namespace Emerson_Excel_Tool
         private void SelectAndRemoveListItems()
         {
             List<int> indexToRemove = new List<int>();
-            foreach (int index in FilesSelected.SelectedIndices)
+            foreach (int index in FileSelectionListBox.SelectedIndices)
             {
                 indexToRemove.Add(index);
             }
             indexToRemove.Reverse();
             foreach (int index in indexToRemove)
             {
-                FilesSelected.Items.RemoveAt(index);
+                FileSelectionListBox.Items.RemoveAt(index);
             }
         }
 
@@ -44,21 +45,20 @@ namespace Emerson_Excel_Tool
             //DialogResult dr = this.openFileDialog1.ShowDialog();
             if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-
+                
                 // Read the files
                 foreach (String file in openFileDialog1.FileNames)
                 {
                     // Create a List Item.
                     try
                     {
-                        FilesSelected.Items.Add(file);
+                        FileSelectionListBox.Items.Add(file);
                     }
 
                     catch (Exception ex)
                     {
-                        // Could not load the file - probably related to Windows file system permissions.
-                        CallMessageBox callbox1;
-                        callbox1.message = ("Cannot display the image: " + file.Substring(file.LastIndexOf('\\'))
+                        // Could not load the file - probably related to Windows file system permissions.            
+                        MessageBox.Show("Cannot display the image: " + file.Substring(file.LastIndexOf('\\'))
                             + ". You may not have permission to read the file, or " +
                             "it may be corrupt.\n\nReported error: " + ex.Message);
                     }
