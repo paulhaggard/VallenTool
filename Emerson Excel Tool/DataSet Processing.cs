@@ -48,7 +48,7 @@ namespace Emerson_Excel_Tool
             //DataSet_Processing instance = new DataSet_Processing(); /////GOT HUNGUP HERE BADLY! READ MORE.
 
             // Just use the function from this class instance, or make it a static method
-            dt = CreateDataTableFromFile(tableName, tableFileLocation);  //TODO come back and use name field
+            dt = CreateDataTableFromFile(tableName, tableFileLocation);  //TODO come back and use name field // ERROR
 
             results = new string[dt.Rows.Count, dt.Columns.Count];
 
@@ -96,9 +96,13 @@ namespace Emerson_Excel_Tool
                 {
 
                     string[] s = input.Split(new char[] { '\t' });
+
+                    if (s.Length < 2)
+                        throw new InvalidDataException("The data file must be formatted with tab-delimitted data containing frequency data and response data!");
+
                     dr = newTable.NewRow();
                     dr["Frequency"] = s[0];
-                    dr["Response"] = s[1];
+                    dr["Response"] = s[1];  // ERROR
                     newTable.Rows.Add(dr);
                 }
             }

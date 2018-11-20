@@ -118,7 +118,7 @@ namespace Emerson_Excel_Tool
 
                             listOfDataSets.ElementAt(_filecounter).tableFileLocation = testFileList.ElementAt(_filecounter);
                             listOfDataSets.ElementAt(_filecounter).tableName = Path.GetFileName(testFileList.ElementAt(_filecounter));
-                            listOfDataSets.ElementAt(_filecounter).GetTableData(out dt, out results);
+                            listOfDataSets.ElementAt(_filecounter).GetTableData(out dt, out results);   // ERROR
                             oSheet.get_Range(IndexToColumn(i + 1) + dt.Columns.Count, IndexToColumn(i + 2) + dt.Rows.Count).Value2 = results;
                             _filecounter++;
 
