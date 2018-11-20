@@ -170,10 +170,10 @@ namespace Emerson_Excel_Tool
             //if WB isn't open, try opening.  Else, try creating.
             if (!WbIsOpened(filenameS))
             {
-                oXL = new Excel.Application();  // Pretty sure this works
+                //oXL = new Excel.Application();  // Pretty sure this works
                 try
                 {
-                    oXL = (Excel.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
+                    oXL = (Excel.Application)Marshal.GetActiveObject("Excel.Application");
                     MessageBox.Show("Opening workbook.", "XLS is Open, Get WB"); //oXL.ActiveWorkbook.Name
                     oWB = (oXL.Workbooks.Open(filenameS));
                     oSheet = (Excel._Worksheet)oWB.ActiveSheet;
@@ -181,12 +181,14 @@ namespace Emerson_Excel_Tool
                 }
                 catch (COMException ex)
                 {
-                    //oXL = (Excel.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
+                    oXL = (Excel.Application)Marshal.GetActiveObject("Excel.Application");
                     oXL.Visible = true;
-                    if (oXL.ActiveWorkbook.Name != null)
+
+                    if ((oXL.ActiveWorkbook ?? null) != null)
                         MessageBox.Show("Excel started. Active workbook being created: " + oXL.ActiveWorkbook.Name, " ...");
                     else
                         MessageBox.Show("Excel started. There is no open workbook, creating one now...");
+
                     oWB = oXL.Workbooks.Add(Missing.Value);
                     oWB.SaveAs(filenameS, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Excel.XlSaveAsAccessMode.xlNoChange, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Missing.Value);
                     oSheet = (Excel._Worksheet)oWB.ActiveSheet;
@@ -198,7 +200,7 @@ namespace Emerson_Excel_Tool
             {
                 try
                 {
-                    oXL = (Excel.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
+                    oXL = (Excel.Application)Marshal.GetActiveObject("Excel.Application");
                     oWB = (oXL.Workbooks.get_Item(filenameS));
                     MessageBox.Show("Excel was running. Active workbook is:" + oXL.ActiveWorkbook.Name, "Already Running");
                     oSheet = (Excel._Worksheet)oWB.ActiveSheet;
@@ -206,7 +208,7 @@ namespace Emerson_Excel_Tool
                 }
                 catch (COMException ex)
                 {
-                    oXL = (Excel.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
+                    oXL = (Excel.Application)Marshal.GetActiveObject("Excel.Application");
 
                     oXL.Visible = true;
                     oWB = (Excel._Workbook)(oXL.Workbooks.Add(Missing.Value));
@@ -224,7 +226,7 @@ namespace Emerson_Excel_Tool
             {
 
                 Excel.Application exApp;
-                exApp = (Excel.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
+                exApp = (Excel.Application)Marshal.GetActiveObject("Excel.Application");
                 try
                 {
                     exApp.Workbooks.get_Item(wbook);
@@ -240,12 +242,12 @@ namespace Emerson_Excel_Tool
             bool XLAppIsOpen()
             {
                 Excel._Application xlObj;
-                Excel._Workbook oWBinternal;
-                Excel._Worksheet oSheetinternal;
+                //Excel._Workbook oWBinternal;
+                //Excel._Worksheet oSheetinternal;
                 try
                 {
 
-                    xlObj = (Excel._Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
+                    xlObj = (Excel._Application)Marshal.GetActiveObject("Excel.Application");
 
                 }
                 catch (COMException ex)

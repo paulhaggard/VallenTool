@@ -43,11 +43,11 @@ namespace Emerson_Excel_Tool
         private void FileSelectionHelper()
         {
             //DialogResult dr = this.openFileDialog1.ShowDialog();
-            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 
                 // Read the files
-                foreach (String file in openFileDialog1.FileNames)
+                foreach (string file in openFileDialog1.FileNames)
                 {
                     // Create a List Item.
                     try
@@ -71,11 +71,11 @@ namespace Emerson_Excel_Tool
         /// </summary>
         private void InitializeOpenFileDialog()
         {
-            this.openFileDialog1.Filter =
+            openFileDialog1.Filter =
         "Text (*.txt)|*.txt|All files (*.*)|*.*";
             // Allow the user to select multiple images.
-            this.openFileDialog1.Multiselect = true;
-            this.openFileDialog1.Title = ".txt File Browser";
+            openFileDialog1.Multiselect = true;
+            openFileDialog1.Title = ".txt File Browser";
 
         }
 

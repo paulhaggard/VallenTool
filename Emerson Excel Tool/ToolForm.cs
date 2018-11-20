@@ -204,7 +204,7 @@ namespace Emerson_Excel_Tool
 
 
         /// <summary>
-        /// File selector
+        /// Text Preview Area
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
