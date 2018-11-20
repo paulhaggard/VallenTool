@@ -26,16 +26,16 @@ namespace Emerson_Excel_Tool
         public class ExcelProcess
         {
 
-            Excel.Application oXL;
-            Excel._Workbook oWB;
-            Excel._Worksheet oSheet;
-            Excel.Range oRng;
+            private Excel.Application oXL;
+            private Excel._Workbook oWB;
+            private Excel._Worksheet oSheet;
+            private Excel.Range oRng;
 
             public ExcelProcess()
             {
                 ExcelLauncher(out oXL, out oWB, out oSheet);
                 oXL.Visible = true;
-                oWB = (Excel.Workbook)(oXL.ActiveWorkbook);
+                oWB = oXL.ActiveWorkbook;
                 oSheet = (Excel.Worksheet)oWB.ActiveSheet;
             }
             
@@ -49,9 +49,9 @@ namespace Emerson_Excel_Tool
                 oXL.Quit();
             }
 
-            public void Launch()
+            public void Launch(List<string> testFileList)
             {
-                if (selectedFilesCount < 1)
+                if (testFileList.Count < 1)
                 {
                     MessageBox.Show("No data selected to import!", "Error");
                 }
@@ -78,8 +78,8 @@ namespace Emerson_Excel_Tool
 
 
 
-                        int columnNumb = 2 * selectedFilesCount;
-                        for (int i = 0; i < selectedFilesCount; i++)
+                        int columnNumb = 2 * testFileList.Count;
+                        for (int i = 0; i < testFileList.Count; i++)
                         {
 
                             int j = (2 * i) + 1;
@@ -105,9 +105,9 @@ namespace Emerson_Excel_Tool
                         DataTable dt;
                         string[,] results;
 
-                        var listOfDataSets = new List<DataSet_Processing>();
+                        List<DataSet_Processing> listOfDataSets = new List<DataSet_Processing>();
 
-                        for (int i = 0; i < selectedFilesCount; i++)
+                        for (int i = 0; i < testFileList.Count; i++)
                         {
                             listOfDataSets.Add(new DataSet_Processing { tableName = "File #" + (i + 1) });
                         }
@@ -116,9 +116,9 @@ namespace Emerson_Excel_Tool
                         for (int i = 0; i < (2 * listOfDataSets.Count); i = i + 2)
                         {
 
-                            listOfDataSets.ElementAt<DataSet_Processing>(_filecounter).tableFileLocation = testFileList.ElementAt(_filecounter);
-                            listOfDataSets.ElementAt<DataSet_Processing>(_filecounter).tableName = Path.GetFileName(testFileList.ElementAt(_filecounter));
-                            listOfDataSets.ElementAt<DataSet_Processing>(_filecounter).GetTableData(out dt, out results);
+                            listOfDataSets.ElementAt(_filecounter).tableFileLocation = testFileList.ElementAt(_filecounter);
+                            listOfDataSets.ElementAt(_filecounter).tableName = Path.GetFileName(testFileList.ElementAt(_filecounter));
+                            listOfDataSets.ElementAt(_filecounter).GetTableData(out dt, out results);
                             oSheet.get_Range(IndexToColumn(i + 1) + dt.Columns.Count, IndexToColumn(i + 2) + dt.Rows.Count).Value2 = results;
                             _filecounter++;
 
@@ -139,11 +139,11 @@ namespace Emerson_Excel_Tool
                     }
                     catch (Exception theException)
                     {
-                        String errorMessage;
+                        string errorMessage;
                         errorMessage = "Error: ";
-                        errorMessage = String.Concat(errorMessage, theException.Message);
-                        errorMessage = String.Concat(errorMessage, " Line: ");
-                        errorMessage = String.Concat(errorMessage, theException.Source);
+                        errorMessage = string.Concat(errorMessage, theException.Message);
+                        errorMessage = string.Concat(errorMessage, " Line: ");
+                        errorMessage = string.Concat(errorMessage, theException.Source);
 
                         MessageBox.Show(errorMessage, "Error");
                     }
@@ -170,6 +170,7 @@ namespace Emerson_Excel_Tool
             //if WB isn't open, try opening.  Else, try creating.
             if (!WbIsOpened(filenameS))
             {
+                oXL = new Excel.Application();  // Pretty sure this works
                 try
                 {
                     oXL = (Excel.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
@@ -180,10 +181,13 @@ namespace Emerson_Excel_Tool
                 }
                 catch (COMException ex)
                 {
-                    oXL = (Excel.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
+                    //oXL = (Excel.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
                     oXL.Visible = true;
-                    MessageBox.Show("Excel started. Active workbook being created: " + oXL.ActiveWorkbook.Name, " ...");
-                    oWB = (Excel._Workbook)(oXL.Workbooks.Add(Missing.Value));
+                    if (oXL.ActiveWorkbook.Name != null)
+                        MessageBox.Show("Excel started. Active workbook being created: " + oXL.ActiveWorkbook.Name, " ...");
+                    else
+                        MessageBox.Show("Excel started. There is no open workbook, creating one now...");
+                    oWB = oXL.Workbooks.Add(Missing.Value);
                     oWB.SaveAs(filenameS, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Excel.XlSaveAsAccessMode.xlNoChange, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Missing.Value);
                     oSheet = (Excel._Worksheet)oWB.ActiveSheet;
                     MessageBox.Show("COM Exception caught: " + ex.Message.ToString());
@@ -215,7 +219,7 @@ namespace Emerson_Excel_Tool
 
 
 
-
+            
             bool WbIsOpened(string wbook)
             {
 
@@ -229,8 +233,10 @@ namespace Emerson_Excel_Tool
                 {
                     WBisOpened = false;
                 }
+
                 return WBisOpened;
             }
+
             bool XLAppIsOpen()
             {
                 Excel._Application xlObj;
@@ -274,7 +280,7 @@ namespace Emerson_Excel_Tool
             Excel.Series oSeries;
             Excel.Range oResizeRange;
             Excel._Chart oChart;
-            String sMsg;
+            string sMsg;
             int iNumQtrs;
 
 
@@ -283,8 +289,8 @@ namespace Emerson_Excel_Tool
             for (iNumQtrs = 4; iNumQtrs >= 2; iNumQtrs--)
             {
                 sMsg = "Enter sales data for ";
-                sMsg = String.Concat(sMsg, iNumQtrs);
-                sMsg = String.Concat(sMsg, " quarter(s)?");
+                sMsg = string.Concat(sMsg, iNumQtrs);
+                sMsg = string.Concat(sMsg, " quarter(s)?");
 
                 DialogResult iRet = MessageBox.Show(sMsg, "Quarterly Sales?",
                 MessageBoxButtons.YesNo);
@@ -293,8 +299,8 @@ namespace Emerson_Excel_Tool
             }
 
             sMsg = "Displaying data for ";
-            sMsg = String.Concat(sMsg, iNumQtrs);
-            sMsg = String.Concat(sMsg, " quarter(s).");
+            sMsg = string.Concat(sMsg, iNumQtrs);
+            sMsg = string.Concat(sMsg, " quarter(s).");
 
             MessageBox.Show(sMsg, "Quarterly Sales");
 
@@ -342,10 +348,10 @@ namespace Emerson_Excel_Tool
             for (int iRet = 1; iRet <= iNumQtrs; iRet++)
             {
                 oSeries = (Excel.Series)oChart.SeriesCollection(iRet);
-                String seriesName;
+                string seriesName;
                 seriesName = "=\"Q";
-                seriesName = String.Concat(seriesName, iRet);
-                seriesName = String.Concat(seriesName, "\"");
+                seriesName = string.Concat(seriesName, iRet);
+                seriesName = string.Concat(seriesName, "\"");
                 oSeries.Name = seriesName;
             }
 
@@ -376,9 +382,9 @@ namespace Emerson_Excel_Tool
             if (index <= ColumnBase)
                 return Digits[index - 1].ToString();
 
-            var sb = new StringBuilder().Append(' ', DigitMax);
-            var current = index;
-            var offset = DigitMax;
+            StringBuilder sb = new StringBuilder().Append(' ', DigitMax);
+            int current = index;
+            int offset = DigitMax;
             while (current > 0)
             {
                 sb[--offset] = Digits[--current % ColumnBase];
