@@ -97,7 +97,6 @@ namespace Emerson_Excel_Tool
         /// </summary>
         public void SetFileToProcess()
         {
-            /*
             //Select all imported files.  Yes, this is dumb.
             FileSelectionListBox.Visible = false;
             for (int i = 0; i < FileSelectionListBox.Items.Count; i++)
@@ -108,14 +107,13 @@ namespace Emerson_Excel_Tool
             //Create array and fill with the strings of each file location
             String[] selectedFilesList = new string[FileSelectionListBox.Items.Count];
             FileSelectionListBox.SelectedItems.CopyTo(selectedFilesList, 0);
-            */
 
             // I'm pretty sure this is equivalent to what you wrote
 
-            List<string> selectedFilesList = new List<string>(FileSelectionListBox.Items.Count);
+            List<string> selectedFilesList1 = new List<string>(FileSelectionListBox.Items.Count);
 
             foreach (string s in FileSelectionListBox.Items)
-                selectedFilesList.Add(s);
+                selectedFilesList1.Add(s);
 
             //Add each line of this array to a list.  Why?  Why not.
             foreach(string s in selectedFilesList)

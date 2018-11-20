@@ -115,20 +115,20 @@ namespace Emerson_Excel_Tool
                         int _filecounter = 0;
                         for (int i = 0; i < (2 * listOfDataSets.Count); i = i + 2)
                         {
-
-                            listOfDataSets.ElementAt(_filecounter).tableFileLocation = testFileList.ElementAt(_filecounter);
-                            listOfDataSets.ElementAt(_filecounter).tableName = Path.GetFileName(testFileList.ElementAt(_filecounter));
-                            listOfDataSets.ElementAt(_filecounter).GetTableData(out dt, out results);   // ERROR
+                            // There's something fucky here...
+                            listOfDataSets[_filecounter].tableFileLocation = testFileList[_filecounter];
+                            listOfDataSets[_filecounter].tableName = Path.GetFileName(testFileList[_filecounter]);
+                            listOfDataSets[_filecounter].GetTableData(out dt, out results);
                             oSheet.get_Range(IndexToColumn(i + 1) + dt.Columns.Count, IndexToColumn(i + 2) + dt.Rows.Count).Value2 = results;
                             _filecounter++;
 
                         }
 
                         oRng = oSheet.Range["A1:D489"];
-                        Object[,] transposedRange = (Object[,])oXL.WorksheetFunction.Transpose(oRng.Value2);
+                        object[,] transposedRange = (object[,])oXL.WorksheetFunction.Transpose(oRng.Value2);
                         Excel.Worksheet oSheet2;
                         oSheet2 = oWB.Worksheets.Add();
-                        oSheet2.Name = "Sheet2";
+                        oSheet2.Name = "Summary";
                         oSheet2.Select();
                         oXL.ActiveSheet.Range["A1:B4"].Resize[transposedRange.GetUpperBound(0), transposedRange.GetUpperBound(1)] = transposedRange;
 
@@ -147,6 +147,7 @@ namespace Emerson_Excel_Tool
 
                         MessageBox.Show(errorMessage, "Error");
                     }
+                    
                 }
             }
         }
