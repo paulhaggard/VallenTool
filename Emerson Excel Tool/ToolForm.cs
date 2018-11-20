@@ -29,7 +29,7 @@ namespace Emerson_Excel_Tool
         ExcelProcess excelObject = new ExcelProcess();
 
         // Create a list to store our files for Excel processing
-        public static List<string> testFileList = new List<string>();
+        public List<string> testFileList = new List<string>();
         
         #region Unused Form Objects/Buttons for Events
         
@@ -90,13 +90,14 @@ namespace Emerson_Excel_Tool
         ///
         ///
 
-        public static int selectedFilesCount { get; set; }
+        public int selectedFilesCount { get; set; }
 
         /// <summary>
         /// Count and identify which file paths have been chosen.
         /// </summary>
         public void SetFileToProcess()
         {
+            /*
             //Select all imported files.  Yes, this is dumb.
             FileSelectionListBox.Visible = false;
             for (int i = 0; i < FileSelectionListBox.Items.Count; i++)
@@ -107,16 +108,23 @@ namespace Emerson_Excel_Tool
             //Create array and fill with the strings of each file location
             String[] selectedFilesList = new string[FileSelectionListBox.Items.Count];
             FileSelectionListBox.SelectedItems.CopyTo(selectedFilesList, 0);
+            */
+
+            // I'm pretty sure this is equivalent to what you wrote
+
+            List<string> selectedFilesList = new List<string>(FileSelectionListBox.Items.Count);
+
+            foreach (string s in FileSelectionListBox.Items)
+                selectedFilesList.Add(s);
+
             //Add each line of this array to a list.  Why?  Why not.
-            for (int i = 0; i < selectedFilesList.Length; i++)
+            foreach(string s in selectedFilesList)
             {
 
-                if (!testFileList.Any(e => e.Equals(selectedFilesList[i])))  //add only if DNE
-                    if (!String.IsNullOrEmpty(selectedFilesList[i]))
-                    {
-                        {
-                            testFileList.Add(selectedFilesList[i]);
-                        }
+                if (!testFileList.Any(e => e.Equals(s)))  //add only if DNE
+                    if (!string.IsNullOrEmpty(s))
+                    { 
+                        testFileList.Add(s);
                     }
 
             }
@@ -133,7 +141,8 @@ namespace Emerson_Excel_Tool
 
         void StoreFilesList(FilesList filesList)
         {
-            var doc = new XmlDocument();
+            // var is for lazy people, use the actual type definition
+            XmlDocument doc = new XmlDocument();
             doc.Load(filesList.FileName);
 
             XmlElement channel = doc["rss"]["channel"];
@@ -213,12 +222,22 @@ namespace Emerson_Excel_Tool
 
         #region Active Buttons
 
+        /// <summary>
+        /// Triggered when the test button 1 is pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void testbuttn_Click(object sender, EventArgs e)
         {
             SetFileToProcess();
 
         }
 
+        /// <summary>
+        /// Triggered when the test button 2 is pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void testbuttn2_Click(object sender, EventArgs e)
         {
             for (int i = 0; i < testFileList.Count; i++)
@@ -227,34 +246,60 @@ namespace Emerson_Excel_Tool
                 MessageBox.Show(testFileList[i], "Test File Location is set to:");
             }
         }
+
+        /// <summary>
+        /// Opens the file selection dialog
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void openFilesButton_Click(object sender, EventArgs e)
         {
             FileSelectionHelper();
         }
 
-
+        /// <summary>
+        /// Clears the selected files from the selection list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RemoveFilesSelected_Click(object sender, EventArgs e)
         {
             SelectAndRemoveListItems();
         }
 
-
+        /// <summary>
+        /// Processes the selected files and inserts them into excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void runExcelBtn(object sender, System.EventArgs e)
         {
             SetFileToProcess();
-            excelObject.Launch();
+            excelObject.Launch(testFileList);
             EmptyTheFileList();
         }
 
+        /// <summary>
+        /// Opens a dialog that displays information about the purpose of the software
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void aboutBtn_Click(object sender, EventArgs e)
         {
             MessageBox.Show("This is a file processing tool built to provide fast, comparative testing of Vallen acoustic emission sensor tests.  " +
                 "It works with .txt files (produced by the Vallen test equipment) and processes them in Excel.", "About the Emerson Tool");
         }
 
+        /// <summary>
+        /// Triggered when a the 'x' button is pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ToolForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             excelObject.Close();
+            if (!IsDisposed)
+                Dispose();  // Gets rid of this object instance
         }
 
         #endregion
