@@ -5,6 +5,12 @@ VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emerson Excel Tool", "Emerson Excel Tool.csproj", "{CF30FF55-F03B-40B8-8800-480AB604EA51}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emerson Toolkit", "..\ExcelToolkit\Emerson Toolkit.csproj", "{68E4FBE9-C55D-4643-B73C-0F3BE6B06826}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{DBFA1521-0BDC-4700-9073-1E03EF9CE2D3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Troubleshooting", "Troubleshooting", "{7F484278-B003-49EE-A896-9B051E24FC47}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +21,20 @@ Global
 		{CF30FF55-F03B-40B8-8800-480AB604EA51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF30FF55-F03B-40B8-8800-480AB604EA51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF30FF55-F03B-40B8-8800-480AB604EA51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68E4FBE9-C55D-4643-B73C-0F3BE6B06826}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68E4FBE9-C55D-4643-B73C-0F3BE6B06826}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68E4FBE9-C55D-4643-B73C-0F3BE6B06826}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68E4FBE9-C55D-4643-B73C-0F3BE6B06826}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBFA1521-0BDC-4700-9073-1E03EF9CE2D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBFA1521-0BDC-4700-9073-1E03EF9CE2D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBFA1521-0BDC-4700-9073-1E03EF9CE2D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBFA1521-0BDC-4700-9073-1E03EF9CE2D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DBFA1521-0BDC-4700-9073-1E03EF9CE2D3} = {7F484278-B003-49EE-A896-9B051E24FC47}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3BF5B4CD-2016-4BF8-AC7C-0EDB3F78CC26}
