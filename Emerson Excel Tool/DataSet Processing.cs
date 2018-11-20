@@ -10,16 +10,18 @@ namespace Emerson_Excel_Tool
 {
     public class DataSet_Processing
     {
-        
-         DataSet _vallenLogs = new DataSet("Vallen Logs");
-        
+        /// <summary>
+        /// Data set of the vallen log
+        /// </summary>
+        public DataSet _vallenLogs { get; private set; } = new DataSet("Vallen Logs");
+
         //private string _tableName;
         //private string _tableFileLocation;
         public DataSet_Processing()  //initializes an instance of the class
         {
-            
+
         }
-        
+
 
 
         //Test Variables
@@ -28,16 +30,6 @@ namespace Emerson_Excel_Tool
 
 
         #region Data Set & Data Tables Code
-
-        ///Create a DataSet
-        ///
-        public DataSet datasetName  // this is a property with an accessor.
-        {               
-        get
-            {
-            return _vallenLogs;
-            }
-        }
 
         //set the working table file name and file path during processing of each file
         public string tableName { get; set; }
@@ -52,10 +44,14 @@ namespace Emerson_Excel_Tool
         //Outputs 
         public void GetTableData(out DataTable dt, out string[,] results)
         {
+            // v This is unnecessary and can lead to infinite loops, don't use recursive classes they're a mess to work with
+            //DataSet_Processing instance = new DataSet_Processing(); /////GOT HUNGUP HERE BADLY! READ MORE.
 
-            DataSet_Processing instance = new DataSet_Processing(); /////GOT HUNGUP HERE BADLY! READ MORE.
-            dt = instance.CreateDataTableFromFile(tableName, tableFileLocation);  //TODO come back and use name field
+            // Just use the function from this class instance, or make it a static method
+            dt = CreateDataTableFromFile(tableName, tableFileLocation);  //TODO come back and use name field
+
             results = new string[dt.Rows.Count, dt.Columns.Count];
+
             for (int index = 0; index < dt.Rows.Count; index++)
             {
                 if (index == 0) { results[0, 0] = tableName; }
@@ -73,16 +69,14 @@ namespace Emerson_Excel_Tool
         /// <summary>
         /// Create a data table from a file.
         /// </summary>
-        /// <returns></returns>
-
-
+        /// <returns>Returns the DataTable object that was created from the file</returns>
         public DataTable CreateDataTableFromFile(string _name, string fileLocation)
         {
 
 
             DataTable newTable = new DataTable();
             newTable = _vallenLogs.Tables.Add(_name);
-            
+
             DataColumn FreqColumn =
             newTable.Columns.Add("Frequency", typeof(string));
             newTable.Columns.Add("Response", typeof(string));
