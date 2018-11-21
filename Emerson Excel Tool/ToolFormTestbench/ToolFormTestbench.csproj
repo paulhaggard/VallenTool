@@ -4,14 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CF30FF55-F03B-40B8-8800-480AB604EA51}</ProjectGuid>
+    <ProjectGuid>{8F2E371D-320E-4AF6-B598-AF14AED1CAE6}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Emerson_Excel_Tool</RootNamespace>
-    <AssemblyName>Emerson Excel Tool</AssemblyName>
+    <RootNamespace>ToolFormTestbench</RootNamespace>
+    <AssemblyName>ToolFormTestbench</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -46,14 +46,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ToolForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ToolForm.Designer.cs">
       <DependentUpon>ToolForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -62,7 +62,6 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="ToolForm.resx">
       <DependentUpon>ToolForm.cs</DependentUpon>
@@ -81,10 +80,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ExcelToolkit\Emerson Toolkit.csproj">
+      <Project>{68e4fbe9-c55d-4643-b73c-0f3be6b06826}</Project>
+      <Name>Emerson Toolkit</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">
       <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
       <VersionMajor>2</VersionMajor>
-      <VersionMinor>7</VersionMinor>
+      <VersionMinor>8</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>primary</WrapperTool>
       <Isolated>False</Isolated>
@@ -93,7 +98,7 @@
     <COMReference Include="Microsoft.Office.Interop.Excel">
       <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
       <VersionMajor>1</VersionMajor>
-      <VersionMinor>8</VersionMinor>
+      <VersionMinor>9</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>primary</WrapperTool>
       <Isolated>False</Isolated>
@@ -108,15 +113,6 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Notes.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ExcelToolkit\Emerson Toolkit.csproj">
-      <Project>{68e4fbe9-c55d-4643-b73c-0f3be6b06826}</Project>
-      <Name>Emerson Toolkit</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExcelToolkit.DataFormatting;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -75,6 +76,43 @@ namespace ExcelToolkit
 
         #region Methods
 
+        #region Static methods
+
+        /// <summary>
+        /// Returns a letter A-Z that represents n
+        /// </summary>
+        /// <param name="n">A number between 0 and 25.</param>
+        /// <returns>returns a letter between A-Z that represents n</returns>
+        public static char IntToChar(int n)
+        {
+            if (n < 0 || n > 25)
+                throw new InvalidOperationException("To convert a number to a character, it must be in the range 0-25");
+
+            return (char)(n + 65);
+        }
+
+        /// <summary>
+        /// Converts an integer column number into an excel column string
+        /// </summary>
+        /// <param name="n">The number to convert</param>
+        /// <returns>Returns a string representing the excel column of n</returns>
+        public static string ColumnNumToColumnString(int n)
+        {
+            if (n < 0)
+                throw new InvalidOperationException("Cannot convert a negative number into a column");
+
+            string temp = "";
+            while(n > 0)
+            {
+                int rem = n % 26;
+                temp = IntToChar(rem) + temp;
+                n = (n - rem) / 26;
+            }
+            return temp;
+        }
+
+        #endregion
+
         /// <summary>
         /// Attempts to open a new instance of excel
         /// </summary>
@@ -125,6 +163,8 @@ namespace ExcelToolkit
             else
                 return false;
         }
+
+        #region Workbook stuff
 
         /// <summary>
         /// Opens a workbook in the current excel instance
@@ -190,6 +230,8 @@ namespace ExcelToolkit
             return false;
         }
 
+        #endregion
+
         /// <summary>
         /// Toggles whether the user can see the excel interface or not
         /// </summary>
@@ -197,6 +239,17 @@ namespace ExcelToolkit
         public void setVisible(bool value)
         {
             app.Visible = value;
+        }
+
+        /// <summary>
+        /// Writes all of the data in the given collection into the workbook
+        /// </summary>
+        /// <param name="data">Data to be written</param>
+        public void writeData(IEnumerable<IExcelData> data)
+        {
+            if(isAppOpen && isWbOpen)
+                for (int i = 0; i < data.Count() * 2; i += 2)
+                    data.ElementAt(i).CreateData(wb, i + 1, 1);
         }
 
         #endregion

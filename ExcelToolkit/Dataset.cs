@@ -6,13 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Excel = Microsoft.Office.Interop.Excel;
+using ExcelToolkit.DataFormatting;
 
 namespace ExcelToolkit
 {
     /// <summary>
     /// A class used to contain a data file of frequencies and response data.
     /// </summary>
-    public class Dataset
+    public class Dataset : IExcelData
     {
         #region Properties
 
@@ -85,6 +86,17 @@ namespace ExcelToolkit
         /// The date that the test was performed
         /// </summary>
         public DateTime Date { get; set; } = DateTime.Now;
+
+        /// <summary>
+        /// A unique id used to identify this object
+        /// </summary>
+        private int id { get; set; } = ++DatasetCount;
+
+        /// <summary>
+        /// A static count that indicates how many dataset objects are in existence,
+        /// is used to set the id of each dataset object.
+        /// </summary>
+        public static int DatasetCount { get; private set; } = 0;
 
         #endregion
 
@@ -203,6 +215,52 @@ namespace ExcelToolkit
         }
 
         #endregion
+
+        public void CreateData(Excel._Workbook workbook, int column_offset, int row_offset)
+        {
+            Excel._Worksheet data = workbook.Worksheets["Data"];
+
+            // ALL the header info.
+            data.Cells[row_offset, column_offset].Value = "Frequency" + id;
+            data.Cells[row_offset, column_offset + 1].Value = "Response" + id;
+            data.Cells[row_offset + 1, column_offset].Value = Setup;
+            data.Cells[row_offset + 2, column_offset].Value = "Caption:";
+            data.Cells[row_offset + 2, column_offset + 1].Value = Caption;
+            data.Cells[row_offset + 3, column_offset].Value = "Y-Axis";
+            data.Cells[row_offset + 3, column_offset + 1].Value = Y_Axis;
+            data.Cells[row_offset + 4, column_offset].Value = "X-Axis";
+            data.Cells[row_offset + 4, column_offset + 1].Value = X_Axis;
+            data.Cells[row_offset + 5, column_offset].Value = "Y-Offset";
+            data.Cells[row_offset + 5, column_offset + 1].Value = Y_Offset;
+            data.Cells[row_offset + 6, column_offset].Value = "Minimum Frequency";
+            data.Cells[row_offset + 6, column_offset + 1].Value = MinimumFrequency;
+            data.Cells[row_offset + 7, column_offset].Value = "Maximum Frequency";
+            data.Cells[row_offset + 7, column_offset + 1].Value = MaximumFrequency;
+            data.Cells[row_offset + 8, column_offset].Value = "Step Size";
+            data.Cells[row_offset + 8, column_offset + 1].Value = StepSize;
+            data.Cells[row_offset + 9, column_offset].Value = "Output Amplitude [Vpp]";
+            data.Cells[row_offset + 9, column_offset + 1].Value = OutputAmplitudeVPP;
+            data.Cells[row_offset + 10, column_offset].Value = "Output Amplitude [RMS]";
+            data.Cells[row_offset + 10, column_offset + 1].Value = OutputAmplitudeRMS;
+            data.Cells[row_offset + 11, column_offset].Value = "Acquisition Channel";
+            data.Cells[row_offset + 11, column_offset + 1].Value = AcquisitionChannel;
+            data.Cells[row_offset + 12, column_offset].Value = "Date:";
+            data.Cells[row_offset + 12, column_offset + 1].Value = Date;
+            data.Cells[row_offset + 13, column_offset].Value = "Frequency [Hz]";
+            data.Cells[row_offset + 13, column_offset + 1].Value = "RMS [dB]";
+
+            // Writes the frequency and response data down
+            for(int i = 0; i < Frequencies.Count; i++)
+            {
+                data.Cells[row_offset + 14 + i, column_offset].Value = Frequencies[i];
+                data.Cells[row_offset + 14 + i, column_offset + 1].Value = Responses[i];
+            }
+        }
+
+        public override string ToString()
+        {
+            return Caption.ToString() + Date.ToShortDateString();
+        }
 
         #endregion
     }

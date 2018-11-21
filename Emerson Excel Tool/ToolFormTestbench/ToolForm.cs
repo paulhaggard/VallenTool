@@ -12,32 +12,24 @@ using System.Reflection;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
-using ExcelToolkit;
 
-namespace Emerson_Excel_Tool
+namespace ToolFormTestbench
 {
     public partial class ToolForm : Form
     {
-        #region Properties
-
-        /// <summary>
-        /// Create an Excel Interop Object to be used for all excel interactions.
-        /// </summary>
-        private ExcelPort excelObject { get; set; } = new ExcelPort();
-
-        /// <summary>
-        /// The set of files that need to be processed
-        /// </summary>
-        private List<string> testFileList { get; set; } = new List<string>();
-
-        #endregion
-
         public ToolForm()
         {
             // Set a few initial forms configuration settings
             InitializeComponent();
             InitializeOpenFileDialog();       
         }
+
+
+        // Create an Excel Interop Object to be used for all excel interactions.
+        ExcelProcess excelObject = new ExcelProcess();
+
+        // Create a list to store our files for Excel processing
+        public List<string> testFileList = new List<string>();
         
         #region Unused Form Objects/Buttons for Events
         
@@ -95,20 +87,62 @@ namespace Emerson_Excel_Tool
 
 
         #region FileSelectionSet
+        ///
+        ///
+
+        public int selectedFilesCount { get; set; }
 
         /// <summary>
         /// Count and identify which file paths have been chosen.
         /// </summary>
         public void SetFileToProcess()
         {
-            foreach (string s in FileSelectionListBox.Items) Shared.AddIfDNE(testFileList, s);
+            /*
+            //Select all imported files.  Yes, this is dumb.
+            FileSelectionListBox.Visible = false;
+            for (int i = 0; i < FileSelectionListBox.Items.Count; i++)
+            {
+                FileSelectionListBox.SetSelected(i, true);
+            }
+            FileSelectionListBox.Visible = true;
+            //Create array and fill with the strings of each file location
+            String[] selectedFilesList = new string[FileSelectionListBox.Items.Count];
+            FileSelectionListBox.SelectedItems.CopyTo(selectedFilesList, 0);
+            */
+
+            // I'm pretty sure this is equivalent to what you wrote
+            // Yes, yes it does
+
+            List<string> selectedFilesList = new List<string>(FileSelectionListBox.Items.Count);
+
+            foreach (string s in FileSelectionListBox.Items)
+                selectedFilesList.Add(s);
+
+            //Add each line of this array to a list.  Why?  Why not.
+            foreach(string s in selectedFilesList)
+            {
+
+                if (!testFileList.Any(e => e.Equals(s)))  //add only if DNE
+                    if (!string.IsNullOrEmpty(s))
+                    { 
+                        testFileList.Add(s);
+                    }
+
+            }
+            //MessageBox.Show(Convert.ToString(selectedFilesList.Length), "Selected file(s) count:");
+            selectedFilesCount = testFileList.Count;
         }
 
         #endregion
 
+        public override string ToString()
+        {
+            return "Hello World!";
+        }
+
         #region Unused XML example
 
-        /*
+
         void StoreFilesList(FilesList filesList)
         {
             // var is for lazy people, use the actual type definition
@@ -122,94 +156,71 @@ namespace Emerson_Excel_Tool
             filesList.Date = channel["description"].InnerText;
 
         }
-        */
 
 
         #endregion
 
         #region Reading .txt line by line
 
+
+        /* 
+         * public void ReadTextFile()
+         {
+             string line;
+             try
+             {
+                 this.InputText.Clear();
+                 //Pass the file path and file name to the StreamReader constructor
+                 StreamReader sr = new StreamReader("C:\\temp\\Jamaica.txt");
+
+                 //Read the first line of text
+                 line = sr.ReadLine();
+
+                 //Continue to read until you reach end of file
+                 while (line != null)
+                 {
+                     //write the lie to console window
+                     //this.InputText.SelectionStart = InputText.Text.Length;
+
+                     this.InputText.AppendText(line);
+                     this.InputText.AppendText(Environment.NewLine);
+
+                     //Read the next line
+                     line = sr.ReadLine();
+                 }
+
+                 //close the file
+                 sr.Close();
+                 String dt;
+                 DataSet_Processing instance = new DataSet_Processing();
+                 instance.CreateDataTableFromFile(testFileLocation, testFileLocation);  ///create the table, this is expecting a table name, too
+             }
+             catch (Exception e)
+             {
+                 MessageBox.Show("Exception: " + e.Message);
+             }
+             finally
+             {
+                 MessageBox.Show("Executing finally block.");
+             }
+         }
+         */
+
+
         /// <summary>
         /// Text Preview Area
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
         }
 
-        #endregion
 
-        #region Methods
 
-        /// <summary>
-        /// Action to multi-select .txt files for processing. 
-        /// To be displayed in list box.
-        /// </summary>
-        private void FileSelectionHelper()
-        {
-            //DialogResult dr = this.openFileDialog1.ShowDialog();
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
 
-                // Read the files
-                foreach (string file in openFileDialog1.FileNames)
-                {
-                    // Create a List Item.
-                    try
-                    {
-                        FileSelectionListBox.Items.Add(Dataset.CreateDataTableFromFile("", file));
-                    }
-
-                    catch (Exception ex)
-                    {
-                        // Could not load the file - probably related to Windows file system permissions.            
-                        MessageBox.Show("Cannot display the image: " + file.Substring(file.LastIndexOf('\\'))
-                            + ". You may not have permission to read the file, or " +
-                            "it may be corrupt.\n\nReported error: " + ex.Message);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Sets the file Dialog settings appropriately for app.
-        /// </summary>
-        private void InitializeOpenFileDialog()
-        {
-            openFileDialog1.Filter = "Text (*.txt)|*.txt|All files (*.*)|*.*";
-            // Allow the user to select multiple images.
-            openFileDialog1.Multiselect = true;
-            openFileDialog1.Title = ".txt File Browser";
-
-        }
-
-        /// <summary>
-        /// To prevent the files list from being executed on twice without emptying list,
-        /// this action clears the list of file locations after the Excel processing is requested.
-        /// </summary>
-        private void EmptyTheFileList()
-        {
-            testFileList.Clear();
-        }
-
-        /// <summary>
-        /// Action to remove items from listbox, including multi-selection
-        /// </summary>
-        private void SelectAndRemoveListItems()
-        {
-            List<int> indexToRemove = new List<int>();
-            foreach (int index in FileSelectionListBox.SelectedIndices)
-            {
-                indexToRemove.Add(index);
-            }
-            indexToRemove.Reverse();
-            foreach (int index in indexToRemove)
-            {
-                FileSelectionListBox.Items.RemoveAt(index);
-            }
-        }
 
         #endregion
 
@@ -223,6 +234,7 @@ namespace Emerson_Excel_Tool
         private void testbuttn_Click(object sender, EventArgs e)
         {
             SetFileToProcess();
+
         }
 
         /// <summary>
@@ -264,10 +276,10 @@ namespace Emerson_Excel_Tool
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void runExcelBtn(object sender, EventArgs e)
+        private void runExcelBtn(object sender, System.EventArgs e)
         {
             SetFileToProcess();
-            excelObject.writeData(FileSelectionListBox.Items.Cast<Dataset>());
+            excelObject.Launch(testFileList);
             EmptyTheFileList();
         }
 
@@ -289,8 +301,7 @@ namespace Emerson_Excel_Tool
         /// <param name="e"></param>
         private void ToolForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if(excelObject.isAppOpen)
-                excelObject.CloseApp();
+            excelObject.Close();
             if (!IsDisposed)
                 Dispose();  // Gets rid of this object instance
         }

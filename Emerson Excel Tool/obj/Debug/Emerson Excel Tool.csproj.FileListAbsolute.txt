@@ -20,3 +20,17 @@ C:\External\CS code\VallenTool\Emerson Excel Tool\obj\Debug\Emerson Excel Tool.c
 C:\External\CS code\VallenTool\Emerson Excel Tool\obj\Debug\Emerson Excel Tool.exe
 C:\External\CS code\VallenTool\Emerson Excel Tool\obj\Debug\Emerson Excel Tool.pdb
 C:\External\CS code\VallenTool\Emerson Excel Tool\obj\Debug\Emerson_Excel_Tool.ToolForm.resources
+G:\Github Repository\VallenTool\Emerson Excel Tool\obj\Debug\Emerson Excel Tool.csprojAssemblyReference.cache
+G:\Github Repository\VallenTool\Emerson Excel Tool\obj\Debug\Emerson Excel Tool.csproj.ResolveComReference.cache
+G:\Github Repository\VallenTool\Emerson Excel Tool\obj\Debug\Emerson_Excel_Tool.Properties.Resources.resources
+G:\Github Repository\VallenTool\Emerson Excel Tool\obj\Debug\Emerson_Excel_Tool.ToolForm.resources
+G:\Github Repository\VallenTool\Emerson Excel Tool\obj\Debug\Emerson Excel Tool.csproj.GenerateResource.cache
+G:\Github Repository\VallenTool\Emerson Excel Tool\obj\Debug\Emerson Excel Tool.csproj.CoreCompileInputs.cache
+G:\Github Repository\VallenTool\Emerson Excel Tool\obj\Debug\Emerson Excel Tool.exe
+G:\Github Repository\VallenTool\Emerson Excel Tool\obj\Debug\Emerson Excel Tool.pdb
+G:\Github Repository\VallenTool\Emerson Excel Tool\bin\Debug\Emerson Excel Tool.exe.config
+G:\Github Repository\VallenTool\Emerson Excel Tool\bin\Debug\Emerson Excel Tool.exe
+G:\Github Repository\VallenTool\Emerson Excel Tool\bin\Debug\Emerson Excel Tool.pdb
+G:\Github Repository\VallenTool\Emerson Excel Tool\bin\Debug\ExcelToolkit.dll
+G:\Github Repository\VallenTool\Emerson Excel Tool\bin\Debug\ExcelToolkit.pdb
+G:\Github Repository\VallenTool\Emerson Excel Tool\obj\Debug\Emerson Excel Tool.csproj.CopyComplete

@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataFormatting\IExcelData.cs" />
     <Compile Include="Dataset.cs" />
     <Compile Include="ExcelPort.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
