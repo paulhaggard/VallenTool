@@ -261,6 +261,8 @@ namespace Emerson_Excel_Tool
             if (!excelObject.isWbOpen)
                 excelObject.OpenWorkbook("vallen.xlsx");
 
+            excelObject.setVisible(true);
+
             excelObject.writeData(datasets);
             EmptyTheFileList();
         }

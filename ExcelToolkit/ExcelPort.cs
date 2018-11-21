@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace ExcelToolkit
@@ -182,6 +184,7 @@ namespace ExcelToolkit
                 {
                     wb = app.Workbooks.Open(workbook);
                     wb.Saved = true;    // Automatically saves the workbook when excel quits
+                    wb.UserControl = true;  // Disables read-only?
                     isWbOpen = true;
                     return true;
                 }
@@ -212,7 +215,7 @@ namespace ExcelToolkit
                 try
                 {
                     // Check to see if the workbook already exists
-                    wb = app.Workbooks[workbook];
+                    wb = app.Workbooks.Open(workbook);
                 }
                 catch
                 {
@@ -257,9 +260,12 @@ namespace ExcelToolkit
         /// <param name="data">Data to be written</param>
         public void writeData(IEnumerable<IExcelData> data)
         {
-            if(isAppOpen && isWbOpen)
-                for (int i = 0; i < data.Count() * 2; i += 2)
-                    data.ElementAt(i).CreateData(wb, i + 1, 1);
+            if (isAppOpen && isWbOpen)
+            {
+                data.ElementAt(0).CreateData(wb, 0, 0); // Calls the data formatter
+                for (int i = 1; i < data.Count(); i++)
+                    data.ElementAt(i).CreateData(wb, ((i - 1) * 2) + 1, 1);
+            }
         }
 
         #endregion
