@@ -220,6 +220,17 @@ namespace ExcelToolkit
         {
             Excel._Worksheet data = workbook.Worksheets["Data"];
 
+            // A string data table to store the output info to put into the worksheet
+            string[,] dt = new string[14 + Frequencies.Count, 2];
+
+            // Gets the range from the current worksheet
+            string columnLetter = ExcelPort.ColumnNumToColumnString(column_offset);
+            string nextColumnLetter = ExcelPort.ColumnNumToColumnString(column_offset + 1);
+            Excel.Range range = data.Range[columnLetter + row_offset, nextColumnLetter + (row_offset + 14 + Frequencies.Count)];
+
+            /*
+             * THIS IS REALLY INEFFICIENT
+             * 
             // ALL the header info.
             data.Cells[row_offset, column_offset].Value = "Frequency" + id;
             data.Cells[row_offset, column_offset + 1].Value = "Response" + id;
@@ -248,13 +259,46 @@ namespace ExcelToolkit
             data.Cells[row_offset + 12, column_offset + 1].Value = Date;
             data.Cells[row_offset + 13, column_offset].Value = "Frequency [Hz]";
             data.Cells[row_offset + 13, column_offset + 1].Value = "RMS [dB]";
+            */
+
+            // ALL the header info.
+            dt[0, 0] = "Frequency" + id;
+            dt[0, 1] = "Response" + id;
+            dt[1, 0] = Setup;
+            dt[2, 0] = "Caption:";
+            dt[2, 1] = Caption;
+            dt[3, 0] = "Y-Axis";
+            dt[3, 1] = Y_Axis;
+            dt[4, 0] = "X-Axis";
+            dt[4, 1] = X_Axis;
+            dt[5, 0] = "Y-Offset";
+            dt[5, 1] = Y_Offset.ToString();
+            dt[6, 0] = "Minimum Frequency";
+            dt[6, 1] = MinimumFrequency.ToString();
+            dt[7, 0] = "Maximum Frequency";
+            dt[7, 1] = MaximumFrequency.ToString();
+            dt[8, 0] = "Step Size";
+            dt[8, 1] = StepSize.ToString();
+            dt[9, 0] = "Output Amplitude [Vpp]";
+            dt[9, 1] = OutputAmplitudeVPP.ToString();
+            dt[10, 0] = "Output Amplitude [RMS]";
+            dt[10, 1] = OutputAmplitudeRMS.ToString();
+            dt[11, 0] = "Acquisition Channel";
+            dt[11, 1] = AcquisitionChannel.ToString();
+            dt[12, 0] = "Date:";
+            dt[12, 1] = Date.ToString();
+            dt[13, 0] = "Frequency [Hz]";
+            dt[13, 1] = "RMS [dB]";
 
             // Writes the frequency and response data down
-            for(int i = 0; i < Frequencies.Count; i++)
+            for (int i = 0; i < Frequencies.Count; i++)
             {
-                data.Cells[row_offset + 14 + i, column_offset].Value = Frequencies[i];
-                data.Cells[row_offset + 14 + i, column_offset + 1].Value = Responses[i];
+                dt[14 + i, 0] = Frequencies[i].ToString();
+                dt[14 + i, 1] = Responses[i].ToString();
             }
+
+            // Writes the data to excel
+            range.Value = dt;
         }
 
         public override string ToString()

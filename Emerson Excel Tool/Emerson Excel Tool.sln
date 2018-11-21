@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Troubleshooting", "Troubles
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Base26ConversionTest", "..\Base26ConversionTest\Base26ConversionTest.csproj", "{936958D4-0891-4299-8418-E2D3AED0F7F9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelReadOnlyTestbench", "ExcelReadOnlyTestbench\ExcelReadOnlyTestbench.csproj", "{C07E2E3C-6B9D-4612-8EE8-F2232DD80D8E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{936958D4-0891-4299-8418-E2D3AED0F7F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{936958D4-0891-4299-8418-E2D3AED0F7F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{936958D4-0891-4299-8418-E2D3AED0F7F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C07E2E3C-6B9D-4612-8EE8-F2232DD80D8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C07E2E3C-6B9D-4612-8EE8-F2232DD80D8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C07E2E3C-6B9D-4612-8EE8-F2232DD80D8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C07E2E3C-6B9D-4612-8EE8-F2232DD80D8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,6 +48,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{DBFA1521-0BDC-4700-9073-1E03EF9CE2D3} = {7F484278-B003-49EE-A896-9B051E24FC47}
 		{936958D4-0891-4299-8418-E2D3AED0F7F9} = {7F484278-B003-49EE-A896-9B051E24FC47}
+		{C07E2E3C-6B9D-4612-8EE8-F2232DD80D8E} = {7F484278-B003-49EE-A896-9B051E24FC47}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3BF5B4CD-2016-4BF8-AC7C-0EDB3F78CC26}
