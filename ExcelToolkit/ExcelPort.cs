@@ -90,7 +90,7 @@ namespace ExcelToolkit
             if (n < 0 || n > 25)
                 throw new InvalidOperationException("To convert a number to a character, it must be in the range 0-25");
 
-            return (char)(n + 64);
+            return (char)(n + 65);
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace ExcelToolkit
             string temp = "";
             while(n > 0)
             {
-                int rem = n % 26;
+                int rem = (n - 1) % 26;
                 temp = IntToChar(rem) + temp;
                 n = (n - rem) / 26;
             }
@@ -127,7 +127,16 @@ namespace ExcelToolkit
             {
                 try
                 {
-                    app = new Excel.Application();
+                    try
+                    {
+                        // Check if Excel is already open
+                        app = (Excel.Application)Marshal.GetActiveObject("Excel.Application");
+                    }
+                    catch
+                    {
+                        // If not create a new instance
+                        app = new Excel.Application();
+                    }
                     isAppOpen = true;
                     app.SheetActivate += App_SheetActivate;
                     app.WorkbookBeforeClose += App_WorkbookBeforeClose;
@@ -178,13 +187,14 @@ namespace ExcelToolkit
         {
             if (isWbOpen)
                 throw new InvalidOperationException("You must close all other workbooks before opening a new one");
+
             if (isAppOpen)
             {
                 if (DoesWBExist(workbook))
                 {
-                    wb = app.Workbooks.Open(workbook);
+                    wb = app.Workbooks.Open(workbook, 0, false, IgnoreReadOnlyRecommended: true, Editable: true);
                     wb.Saved = true;    // Automatically saves the workbook when excel quits
-                    wb.UserControl = true;  // Disables read-only?
+                    //wb.UserControl = true;  // Disables read-only?
                     isWbOpen = true;
                     return true;
                 }
@@ -215,13 +225,13 @@ namespace ExcelToolkit
                 try
                 {
                     // Check to see if the workbook already exists
-                    wb = app.Workbooks.Open(workbook);
+                    wb = app.Workbooks.Open(workbook, ReadOnly: false, IgnoreReadOnlyRecommended: true);
                 }
                 catch
                 {
                     // The workbook does not exist
                     wb = app.Workbooks.Add();
-                    wb.SaveAs(workbook);    // Saves the workbook if it was created new...
+                    wb.SaveAs(workbook, ReadOnlyRecommended: false);    // Saves the workbook if it was created new...
                 }
 
                 ws = wb.ActiveSheet;
@@ -262,7 +272,7 @@ namespace ExcelToolkit
         {
             if (isAppOpen && isWbOpen)
             {
-                data.ElementAt(0).CreateData(wb, 0, 0); // Calls the data formatter
+                data.ElementAt(0).CreateData(wb, data.Count() * 2, 0); // Calls the data formatter
                 for (int i = 1; i < data.Count(); i++)
                     data.ElementAt(i).CreateData(wb, ((i - 1) * 2) + 1, 1);
             }
