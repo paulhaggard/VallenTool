@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
 using ExcelToolkit;
+using ExcelToolkit.DataFormatting;
 
 namespace Emerson_Excel_Tool
 {
@@ -23,12 +24,12 @@ namespace Emerson_Excel_Tool
         /// <summary>
         /// Create an Excel Interop Object to be used for all excel interactions.
         /// </summary>
-        private ExcelPort excelObject { get; set; } = new ExcelPort();
+        private ExcelPort excelObject { get; set; } = new ExcelPort(false);
 
         /// <summary>
-        /// The set of files that need to be processed
+        /// Contains the data outside of the listbox
         /// </summary>
-        private List<string> testFileList { get; set; } = new List<string>();
+        private List<IExcelData> datasets { get; set; } = new List<IExcelData>();
 
         #endregion
 
@@ -36,6 +37,9 @@ namespace Emerson_Excel_Tool
         {
             // Set a few initial forms configuration settings
             InitializeComponent();
+
+            datasets.Add(new ExcelWorkbookFormatter());
+
             InitializeOpenFileDialog();       
         }
         
@@ -101,29 +105,8 @@ namespace Emerson_Excel_Tool
         /// </summary>
         public void SetFileToProcess()
         {
-            foreach (string s in FileSelectionListBox.Items) Shared.AddIfDNE(testFileList, s);
+            datasets.AddRange(FileSelectionListBox.Items.Cast<Dataset>());  // Adds the data in the listbox to the processing data
         }
-
-        #endregion
-
-        #region Unused XML example
-
-        /*
-        void StoreFilesList(FilesList filesList)
-        {
-            // var is for lazy people, use the actual type definition
-            XmlDocument doc = new XmlDocument();
-            doc.Load(filesList.FileName);
-
-            XmlElement channel = doc["rss"]["channel"];
-            XmlNodeList items = channel.GetElementsByTagName("item");
-            filesList.FileLocation = channel["title"].InnerText;
-            filesList.Link = channel["link"].InnerText;
-            filesList.Date = channel["description"].InnerText;
-
-        }
-        */
-
 
         #endregion
 
@@ -159,7 +142,8 @@ namespace Emerson_Excel_Tool
                     // Create a List Item.
                     try
                     {
-                        FileSelectionListBox.Items.Add(Dataset.CreateDataTableFromFile("", file));
+                        Dataset d = Dataset.CreateDataTableFromFile("", file);
+                        FileSelectionListBox.Items.Add(d);
                     }
 
                     catch (Exception ex)
@@ -191,7 +175,9 @@ namespace Emerson_Excel_Tool
         /// </summary>
         private void EmptyTheFileList()
         {
-            testFileList.Clear();
+            // Resets the data list
+            datasets.Clear();
+            datasets.Add(new ExcelWorkbookFormatter());
         }
 
         /// <summary>
@@ -232,10 +218,9 @@ namespace Emerson_Excel_Tool
         /// <param name="e"></param>
         private void testbuttn2_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < testFileList.Count; i++)
+            for (int i = 0; i < FileSelectionListBox.Items.Count; i++)
             {
-
-                MessageBox.Show(testFileList[i], "Test File Location is set to:");
+                MessageBox.Show(FileSelectionListBox.Items[i].ToString(), "Test File Location is set to:");
             }
         }
 
@@ -267,7 +252,16 @@ namespace Emerson_Excel_Tool
         private void runExcelBtn(object sender, EventArgs e)
         {
             SetFileToProcess();
-            excelObject.writeData(FileSelectionListBox.Items.Cast<Dataset>());
+
+            // Opens excel if it's not already open
+            if (!excelObject.isAppOpen)
+                excelObject.OpenApp();
+
+            // Opens the workbook if it hasn't been opened yet
+            if (!excelObject.isWbOpen)
+                excelObject.OpenWorkbook("vallen.xlsx");
+
+            excelObject.writeData(datasets);
             EmptyTheFileList();
         }
 
