@@ -24,6 +24,7 @@ namespace ExcelToolkit
             //Format headers as bold, vertical alignment = center.
             Excel._Worksheet sheet = workbook.Worksheets[1];
 
+            // ERROR
             string columnLetter = ExcelPort.ColumnNumToColumnString(column_offset);
 
             sheet.get_Range("A1", columnLetter + "1").Font.Bold = true;

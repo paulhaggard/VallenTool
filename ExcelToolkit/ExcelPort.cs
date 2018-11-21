@@ -90,7 +90,7 @@ namespace ExcelToolkit
             if (n < 0 || n > 25)
                 throw new InvalidOperationException("To convert a number to a character, it must be in the range 0-25");
 
-            return (char)(n + 65);
+            return (char)(n + 64);
         }
 
         /// <summary>
