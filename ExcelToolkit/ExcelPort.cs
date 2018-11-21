@@ -209,8 +209,18 @@ namespace ExcelToolkit
                 return false;
             else
             {
-                wb = app.Workbooks.Add();
-                wb.SaveAs(workbook);
+                try
+                {
+                    // Check to see if the workbook already exists
+                    wb = app.Workbooks[workbook];
+                }
+                catch
+                {
+                    // The workbook does not exist
+                    wb = app.Workbooks.Add();
+                    wb.SaveAs(workbook);    // Saves the workbook if it was created new...
+                }
+
                 ws = wb.ActiveSheet;
                 isWbOpen = true;
                 return true;
