@@ -45,6 +45,7 @@
     <Compile Include="DataFormatting\IExcelData.cs" />
     <Compile Include="Dataset.cs" />
     <Compile Include="ExcelPort.cs" />
+    <Compile Include="ExcelWorkbookFormatter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shared.cs" />
   </ItemGroup>

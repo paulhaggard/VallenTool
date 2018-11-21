@@ -4,3 +4,4 @@ G:\Github Repository\VallenTool\ExcelToolkit\bin\Debug\ExcelToolkit.dll
 G:\Github Repository\VallenTool\ExcelToolkit\bin\Debug\ExcelToolkit.pdb
 G:\Github Repository\VallenTool\ExcelToolkit\obj\Debug\ExcelToolkit.dll
 G:\Github Repository\VallenTool\ExcelToolkit\obj\Debug\ExcelToolkit.pdb
+G:\Github Repository\VallenTool\ExcelToolkit\obj\Debug\Emerson Toolkit.csprojAssemblyReference.cache
