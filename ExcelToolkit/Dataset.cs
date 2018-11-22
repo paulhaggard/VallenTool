@@ -220,46 +220,19 @@ namespace ExcelToolkit
         {
             Excel._Worksheet data = workbook.Worksheets["Data"];
 
-            // A string data table to store the output info to put into the worksheet
-            string[,] dt = new string[14 + Frequencies.Count, 2];
-
             // Gets the range from the current worksheet
             string columnLetter = ExcelPort.ColumnNumToColumnString(column_offset);
             string nextColumnLetter = ExcelPort.ColumnNumToColumnString(column_offset + 1);
             Excel.Range range = data.Range[columnLetter + row_offset, nextColumnLetter + (row_offset + 14 + Frequencies.Count)];
 
-            /*
-             * THIS IS REALLY INEFFICIENT
-             * 
-            // ALL the header info.
-            data.Cells[row_offset, column_offset].Value = "Frequency" + id;
-            data.Cells[row_offset, column_offset + 1].Value = "Response" + id;
-            data.Cells[row_offset + 1, column_offset].Value = Setup;
-            data.Cells[row_offset + 2, column_offset].Value = "Caption:";
-            data.Cells[row_offset + 2, column_offset + 1].Value = Caption;
-            data.Cells[row_offset + 3, column_offset].Value = "Y-Axis";
-            data.Cells[row_offset + 3, column_offset + 1].Value = Y_Axis;
-            data.Cells[row_offset + 4, column_offset].Value = "X-Axis";
-            data.Cells[row_offset + 4, column_offset + 1].Value = X_Axis;
-            data.Cells[row_offset + 5, column_offset].Value = "Y-Offset";
-            data.Cells[row_offset + 5, column_offset + 1].Value = Y_Offset;
-            data.Cells[row_offset + 6, column_offset].Value = "Minimum Frequency";
-            data.Cells[row_offset + 6, column_offset + 1].Value = MinimumFrequency;
-            data.Cells[row_offset + 7, column_offset].Value = "Maximum Frequency";
-            data.Cells[row_offset + 7, column_offset + 1].Value = MaximumFrequency;
-            data.Cells[row_offset + 8, column_offset].Value = "Step Size";
-            data.Cells[row_offset + 8, column_offset + 1].Value = StepSize;
-            data.Cells[row_offset + 9, column_offset].Value = "Output Amplitude [Vpp]";
-            data.Cells[row_offset + 9, column_offset + 1].Value = OutputAmplitudeVPP;
-            data.Cells[row_offset + 10, column_offset].Value = "Output Amplitude [RMS]";
-            data.Cells[row_offset + 10, column_offset + 1].Value = OutputAmplitudeRMS;
-            data.Cells[row_offset + 11, column_offset].Value = "Acquisition Channel";
-            data.Cells[row_offset + 11, column_offset + 1].Value = AcquisitionChannel;
-            data.Cells[row_offset + 12, column_offset].Value = "Date:";
-            data.Cells[row_offset + 12, column_offset + 1].Value = Date;
-            data.Cells[row_offset + 13, column_offset].Value = "Frequency [Hz]";
-            data.Cells[row_offset + 13, column_offset + 1].Value = "RMS [dB]";
-            */
+            
+            // Writes the data to excel
+            range.Value = GetStringData();
+        }
+
+        public string[,] GetStringData()
+        {
+            string[,] dt = new string[14 + Frequencies.Count, 2];
 
             // ALL the header info.
             dt[0, 0] = "Frequency" + id;
@@ -297,8 +270,7 @@ namespace ExcelToolkit
                 dt[14 + i, 1] = Responses[i].ToString();
             }
 
-            // Writes the data to excel
-            range.Value = dt;
+            return dt;
         }
 
         public override string ToString()

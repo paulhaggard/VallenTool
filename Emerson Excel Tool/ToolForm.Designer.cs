@@ -27,12 +27,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ToolForm));
             this.runExcelProcess = new System.Windows.Forms.Button();
             this.helloWorldLabel = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.FileSelectionListBox = new System.Windows.Forms.ListBox();
-            this.InputText = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.openFilesButton = new System.Windows.Forms.Button();
             this.RemoveFilesSelected = new System.Windows.Forms.Button();
@@ -40,10 +40,12 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.testbuttn = new System.Windows.Forms.Button();
             this.testbuttn2 = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // runExcelProcess
@@ -103,17 +105,6 @@
             this.FileSelectionListBox.TabIndex = 5;
             this.FileSelectionListBox.SelectedIndexChanged += new System.EventHandler(this.FilesSelected_SelectedIndexChanged);
             // 
-            // InputText
-            // 
-            this.InputText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.InputText.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F);
-            this.InputText.Location = new System.Drawing.Point(0, 0);
-            this.InputText.Multiline = true;
-            this.InputText.Name = "InputText";
-            this.InputText.Size = new System.Drawing.Size(314, 424);
-            this.InputText.TabIndex = 6;
-            this.InputText.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -167,7 +158,7 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.InputText);
+            this.splitContainer1.Panel1.Controls.Add(this.dataGridView1);
             // 
             // splitContainer1.Panel2
             // 
@@ -196,6 +187,14 @@
             this.testbuttn2.UseVisualStyleBackColor = true;
             this.testbuttn2.Click += new System.EventHandler(this.testbuttn2_Click);
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(312, 424);
+            this.dataGridView1.TabIndex = 7;
+            // 
             // ToolForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -211,6 +210,7 @@
             this.Controls.Add(this.helloWorldLabel);
             this.Controls.Add(this.runExcelProcess);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MinimumSize = new System.Drawing.Size(962, 563);
             this.Name = "ToolForm";
@@ -218,10 +218,10 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ToolForm_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -233,7 +233,6 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ListBox FileSelectionListBox;
-        private System.Windows.Forms.TextBox InputText;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button openFilesButton;
         private System.Windows.Forms.Button RemoveFilesSelected;
@@ -241,5 +240,6 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Button testbuttn;
         private System.Windows.Forms.Button testbuttn2;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

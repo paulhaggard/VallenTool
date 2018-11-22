@@ -40,7 +40,9 @@ namespace Emerson_Excel_Tool
 
             datasets.Add(new ExcelWorkbookFormatter());
 
-            InitializeOpenFileDialog();       
+            InitializeOpenFileDialog();
+
+            prepareDataGridView();
         }
         
         #region Unused Form Objects/Buttons for Events
@@ -70,11 +72,6 @@ namespace Emerson_Excel_Tool
 
         }
 
-        private void FilesSelected_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void label1_Click(object sender, EventArgs e)
         {
 
@@ -97,8 +94,7 @@ namespace Emerson_Excel_Tool
 
         #endregion
 
-
-        #region FileSelectionSet
+        #region Methods
 
         /// <summary>
         /// Count and identify which file paths have been chosen.
@@ -107,24 +103,6 @@ namespace Emerson_Excel_Tool
         {
             datasets.AddRange(FileSelectionListBox.Items.Cast<Dataset>());  // Adds the data in the listbox to the processing data
         }
-
-        #endregion
-
-        #region Reading .txt line by line
-
-        /// <summary>
-        /// Text Preview Area
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>
         /// Action to multi-select .txt files for processing. 
@@ -195,6 +173,42 @@ namespace Emerson_Excel_Tool
             {
                 FileSelectionListBox.Items.RemoveAt(index);
             }
+        }
+
+        /// <summary>
+        /// Prepares the datagridView object for use with the datasets
+        /// </summary>
+        private void prepareDataGridView()
+        {
+            dataGridView1.ColumnCount = 2;
+            dataGridView1.Name = "Preview box";
+            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            dataGridView1.Columns[0].Name = "Frequency";
+            dataGridView1.Columns[1].Name = "Response";
+            dataGridView1.Rows.Add(new string[2] { "Select a file to preview it", "" });
+        }
+
+        #endregion
+
+        #region Events
+
+        /// <summary>
+        /// Reads in the currently selected list item and puts it into the preview pane
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void FilesSelected_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            dataGridView1.Rows.Clear();
+            Dataset d = (Dataset)FileSelectionListBox.SelectedItem;
+            string[,] dt = d.GetStringData();
+
+            dataGridView1.Columns[0].Name = dt[0, 0];
+            dataGridView1.Columns[1].Name = dt[0, 1];
+
+            for(int i = 1; i < dt.GetLength(0); i++)
+                dataGridView1.Rows.Add(new string[2] { dt[i, 0], dt[i, 1] });
         }
 
         #endregion

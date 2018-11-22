@@ -32,5 +32,10 @@ namespace ExcelToolkit
                 Excel.XlVAlign.xlVAlignCenter;
             sheet.get_Range("A1", columnLetter + "1").ColumnWidth = 18;
         }
+
+        public string[,] GetStringData()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

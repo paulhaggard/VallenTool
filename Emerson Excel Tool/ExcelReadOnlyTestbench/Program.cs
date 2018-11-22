@@ -40,7 +40,7 @@ namespace ExcelReadOnlyTestbench
                     oWB = (app.Workbooks.Open(filenameS));
                     print("Opened the workbook from a previous file.");
                 }
-                catch (COMException ex)
+                catch (COMException)
                 {
                     print("Creating a new workbook.");
                     oWB = app.Workbooks.Add();

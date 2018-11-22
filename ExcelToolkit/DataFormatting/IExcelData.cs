@@ -19,5 +19,11 @@ namespace ExcelToolkit.DataFormatting
         /// <param name="column_offset">column offset (1='a'...)</param>
         /// <param name="row_offset">row offset</param>
         void CreateData(Excel._Workbook workbook, int column_offset, int row_offset);
+
+        /// <summary>
+        /// Gets a string array that represents the data in the dataset
+        /// </summary>
+        /// <returns>Returns a 2-dimensional array of information stored in the dataset</returns>
+        string[,] GetStringData();
     }
 }
