@@ -6,8 +6,16 @@ using System.Threading.Tasks;
 
 namespace ExcelToolkit.DataFormatting
 {
+    /// <summary>
+    /// A way to represent a sequence of data used in the Mr Plotter plotting function
+    /// </summary>
+    /// <typeparam name="T">Type of data to be plotted</typeparam>
     public interface IDataManData<T>
     {
-        ICollection<T> getData();
+        /// <summary>
+        /// Gets a list of coordinate pairs in the format of (X, Y) tuples
+        /// </summary>
+        /// <returns></returns>
+        ICollection<Tuple<T, T>> getData();
     }
 }
