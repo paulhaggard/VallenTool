@@ -41,6 +41,7 @@
             this.testbuttn = new System.Windows.Forms.Button();
             this.testbuttn2 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.buttonDataManipulation = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -195,11 +196,22 @@
             this.dataGridView1.Size = new System.Drawing.Size(312, 424);
             this.dataGridView1.TabIndex = 7;
             // 
+            // buttonDataManipulation
+            // 
+            this.buttonDataManipulation.Location = new System.Drawing.Point(104, 478);
+            this.buttonDataManipulation.Name = "buttonDataManipulation";
+            this.buttonDataManipulation.Size = new System.Drawing.Size(141, 40);
+            this.buttonDataManipulation.TabIndex = 6;
+            this.buttonDataManipulation.Text = "Data Visualisation";
+            this.buttonDataManipulation.UseVisualStyleBackColor = true;
+            this.buttonDataManipulation.Click += new System.EventHandler(this.buttonDataManipulation_Click);
+            // 
             // ToolForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(946, 524);
+            this.Controls.Add(this.buttonDataManipulation);
             this.Controls.Add(this.testbuttn2);
             this.Controls.Add(this.testbuttn);
             this.Controls.Add(this.splitContainer1);
@@ -241,5 +253,6 @@
         private System.Windows.Forms.Button testbuttn;
         private System.Windows.Forms.Button testbuttn2;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button buttonDataManipulation;
     }
 }

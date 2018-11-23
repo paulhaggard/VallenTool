@@ -9,11 +9,26 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ExcelToolkit;
 using ExcelToolkit.Statistics;
+using static System.Windows.Forms.CheckedListBox;
 
 namespace Emerson_Excel_Tool
 {
     public partial class HistogramInfo : Form
     {
+        #region Events
+
+        public delegate void CalculationHandler(object sender, Histogram results);
+        /// <summary>
+        /// Triggered when the histogramInfo has completed
+        /// </summary>
+        public event CalculationHandler CompletionEvent;
+        public void OnCompletionEvent()
+        {
+            CompletionEvent?.Invoke(this, histogram);
+        }
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -67,8 +82,12 @@ namespace Emerson_Excel_Tool
             numericUpDownBinCount.Minimum = 1;
             radioButtonDefault.Checked = true;
             radioButtonRefresh();
+            listBoxRefresh();
         }
 
+        /// <summary>
+        /// Refreshes the radiobuttons
+        /// </summary>
         private void radioButtonRefresh()
         {
             if(radioButtonDefault.Checked)
@@ -83,6 +102,13 @@ namespace Emerson_Excel_Tool
                 numericUpDownBinCreator.Enabled = true;
                 buttonAdd.Enabled = true;
             }
+        }
+
+        private void listBoxRefresh()
+        {
+            listBoxBins.Items.Clear();
+            foreach (double d in histogram.Bins)
+                listBoxBins.Items.Add(d);
         }
 
         #endregion
@@ -102,11 +128,27 @@ namespace Emerson_Excel_Tool
             if (!radioButtonCustom.Checked)
                 radioButtonCustom.Checked = true;
             listBoxBins.Items.RemoveAt(listBoxBins.SelectedIndex);
+            histogram.Bins = listBoxBins.Items.Cast<double>().ToList();
+            listBoxRefresh();
         }
 
         private void numericUpDownBinCount_ValueChanged(object sender, EventArgs e)
         {
+            histogram.BinCount = (int)numericUpDownBinCount.Value;
+            listBoxRefresh();
+        }
 
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+            listBoxBins.Items.Add(numericUpDownBinCreator.Value);
+            histogram.Bins = listBoxBins.Items.Cast<double>().ToList();
+            listBoxRefresh();
+        }
+
+        private void buttonAccept_Click(object sender, EventArgs e)
+        {
+            OnCompletionEvent();
+            Dispose();
         }
     }
 }

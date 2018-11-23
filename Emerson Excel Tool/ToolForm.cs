@@ -202,13 +202,16 @@ namespace Emerson_Excel_Tool
         {
             dataGridView1.Rows.Clear();
             Dataset d = (Dataset)FileSelectionListBox.SelectedItem;
-            string[,] dt = d.GetStringData();
+            if (d != null)
+            {
+                string[,] dt = d.GetStringData();
 
-            dataGridView1.Columns[0].Name = dt[0, 0];
-            dataGridView1.Columns[1].Name = dt[0, 1];
+                dataGridView1.Columns[0].Name = dt[0, 0];
+                dataGridView1.Columns[1].Name = dt[0, 1];
 
-            for(int i = 1; i < dt.GetLength(0); i++)
-                dataGridView1.Rows.Add(new string[2] { dt[i, 0], dt[i, 1] });
+                for (int i = 1; i < dt.GetLength(0); i++)
+                    dataGridView1.Rows.Add(new string[2] { dt[i, 0], dt[i, 1] });
+            }
         }
 
         #endregion
@@ -305,8 +308,25 @@ namespace Emerson_Excel_Tool
                 Dispose();  // Gets rid of this object instance
         }
 
-        #endregion
+        /// <summary>
+        /// Creates a new DataManipulator window that has various tools for manipulating the data
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonDataManipulation_Click(object sender, EventArgs e)
+        {
+            Dataset temp = new Dataset();
+            foreach(object set in FileSelectionListBox.SelectedItems)
+            {
+                temp.Frequencies.AddRange(((Dataset)set).Frequencies);
+                temp.Responses.AddRange(((Dataset)set).Responses);
+            }
 
+            DataManipulator manipulator = new DataManipulator(temp);
+            manipulator.Visible = true;
+        }
+
+        #endregion
     }
 }
 

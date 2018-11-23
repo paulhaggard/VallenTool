@@ -53,6 +53,7 @@
             this.buttonAccept.TabIndex = 0;
             this.buttonAccept.Text = "Accept";
             this.buttonAccept.UseVisualStyleBackColor = true;
+            this.buttonAccept.Click += new System.EventHandler(this.buttonAccept_Click);
             // 
             // label1
             // 
@@ -153,6 +154,7 @@
             this.buttonAdd.TabIndex = 10;
             this.buttonAdd.Text = "Add Bin";
             this.buttonAdd.UseVisualStyleBackColor = true;
+            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
             // buttonCencel
             // 

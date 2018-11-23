@@ -42,7 +42,8 @@ namespace Emerson_Excel_Tool
         {
             InitializeComponent();
 
-            dataset = data;refreshDataGrid();
+            dataset = data;
+            refreshDataGrid();
         }
 
         #endregion
@@ -54,13 +55,14 @@ namespace Emerson_Excel_Tool
         /// </summary>
         private void refreshDataGrid()
         {
+            dataGridView1.ColumnCount = 2;
             dataGridView1.Rows.Clear();
             string[,] dt = dataset.GetStringData();
 
-            dataGridView1.Columns[0].Name = dt[0, 0];
-            dataGridView1.Columns[1].Name = dt[0, 1];
+            dataGridView1.Columns[0].Name = "Frequency";
+            dataGridView1.Columns[1].Name = "Response";
 
-            for (int i = 1; i < dt.GetLength(0); i++)
+            for (int i = 14; i < dt.GetLength(0); i++)
                 dataGridView1.Rows.Add(new string[2] { dt[i, 0], dt[i, 1] });
         }
 
@@ -71,9 +73,20 @@ namespace Emerson_Excel_Tool
             Dispose();
         }
 
+        #region Histogram
+
         private void histogramToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            HistogramInfo histoWindow = new HistogramInfo(dataset);
+            histoWindow.CompletionEvent += HistoWindow_CompletionEvent;
+            histoWindow.Visible = true;
         }
+
+        private void HistoWindow_CompletionEvent(object sender, ExcelToolkit.Statistics.Histogram results)
+        {
+            //TODO plot the histogram
+        }
+
+        #endregion
     }
 }

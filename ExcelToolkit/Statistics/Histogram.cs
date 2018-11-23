@@ -58,9 +58,9 @@ namespace ExcelToolkit.Statistics
         /// <param name="bins">[optional] Manual specification for the bins, takes precedence over binCount</param>
         public Histogram(Dataset data, int binCount = 0, ICollection<double> bins = null)
         {
-            BinCount = binCount;
+            this.binCount = binCount;
             Data = data;
-            Bins = bins ?? new List<double>();
+            this.bins = bins ?? new List<double>();
 
             if (binCount != 0 && bins == null)
                 GenerateBins();
