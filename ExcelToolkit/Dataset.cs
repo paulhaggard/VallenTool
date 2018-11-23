@@ -13,7 +13,7 @@ namespace ExcelToolkit
     /// <summary>
     /// A class used to contain a data file of frequencies and response data.
     /// </summary>
-    public class Dataset : IExcelData
+    public class Dataset : IExcelData, IDataManData<double>
     {
         #region Properties
 
@@ -276,6 +276,38 @@ namespace ExcelToolkit
         public override string ToString()
         {
             return Caption.ToString() + Date.ToShortDateString();
+        }
+
+        /// <summary>
+        /// Calculates the average of the response data
+        /// </summary>
+        /// <returns></returns>
+        public double Average()
+        {
+            return Responses.Average();
+        }
+
+        /// <summary>
+        /// Calculates the standard deviation of the response data
+        /// std = sqrt(avg((x[i] - avg(x))^2))
+        /// </summary>
+        /// <returns></returns>
+        public double StdDev()
+        {
+            double result = 0;
+            double average = Average();
+            foreach (double d in Responses)
+                result += Math.Pow(d - average, 2);
+            result /= Responses.Count;
+            return Math.Sqrt(result);
+        }
+
+        public ICollection<Tuple<double, double>> getData()
+        {
+            List<Tuple<double, double>> result = new List<Tuple<double, double>>();
+            for (int i = 0; i < Frequencies.Count; i++)
+                result.Add(new Tuple<double, double>(Frequencies[i], Responses[i]));
+            return result;
         }
 
         #endregion

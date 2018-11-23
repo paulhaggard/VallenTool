@@ -19,6 +19,8 @@ namespace ExcelToolkit
             }
             workbook.Worksheets[1].Name = "Data";
             workbook.Worksheets[1].Cells.Clear();
+            Excel._Worksheet temp = workbook.Worksheets.Add(After: 1);
+            temp.Name = "Frequency Bins";
 
             //FORMATTING
             //Format headers as bold, vertical alignment = center.
