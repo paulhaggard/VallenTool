@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExcelToolkit.DataFormatting;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace ExcelToolkit.Statistics
     /// <summary>
     /// Embodies a histogram, used for the histogram wizard
     /// </summary>
-    public class Histogram
+    public class Histogram : IDataManData<double>
     {
         #region Properties
 
@@ -72,6 +73,11 @@ namespace ExcelToolkit.Statistics
         #endregion
 
         #region Methods
+
+        public ICollection<double> getData()
+        {
+            return BinData.Cast<double>().ToList();
+        }
 
         #region Setters
 

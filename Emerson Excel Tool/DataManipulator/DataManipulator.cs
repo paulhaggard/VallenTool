@@ -1,4 +1,5 @@
 ﻿using ExcelToolkit;
+using ExcelToolkit.DataFormatting;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -66,6 +67,16 @@ namespace Emerson_Excel_Tool
                 dataGridView1.Rows.Add(new string[2] { dt[i, 0], dt[i, 1] });
         }
 
+        /// <summary>
+        /// Plots the data provided onto a chart
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="data"></param>
+        private void MrPlotter<T>(IDataManData<T> data)
+        {
+
+        }
+
         #endregion
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -82,7 +93,7 @@ namespace Emerson_Excel_Tool
             histoWindow.Visible = true;
         }
 
-        private void HistoWindow_CompletionEvent(object sender, ExcelToolkit.Statistics.Histogram results)
+        private void HistoWindow_CompletionEvent(object sender, IDataManData<double> results)
         {
             //TODO plot the histogram
         }
