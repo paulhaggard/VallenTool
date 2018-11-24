@@ -42,11 +42,14 @@
             this.testbuttn2 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.buttonDataManipulation = new System.Windows.Forms.Button();
+            this.numericUpDownBins = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownBins)).BeginInit();
             this.SuspendLayout();
             // 
             // runExcelProcess
@@ -141,6 +144,7 @@
             // 
             // aboutBtn
             // 
+            this.aboutBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.aboutBtn.Location = new System.Drawing.Point(16, 481);
             this.aboutBtn.Name = "aboutBtn";
             this.aboutBtn.Size = new System.Drawing.Size(82, 34);
@@ -198,6 +202,7 @@
             // 
             // buttonDataManipulation
             // 
+            this.buttonDataManipulation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.buttonDataManipulation.Location = new System.Drawing.Point(104, 478);
             this.buttonDataManipulation.Name = "buttonDataManipulation";
             this.buttonDataManipulation.Size = new System.Drawing.Size(141, 40);
@@ -206,11 +211,46 @@
             this.buttonDataManipulation.UseVisualStyleBackColor = true;
             this.buttonDataManipulation.Click += new System.EventHandler(this.buttonDataManipulation_Click);
             // 
+            // numericUpDownBins
+            // 
+            this.numericUpDownBins.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDownBins.Location = new System.Drawing.Point(565, 488);
+            this.numericUpDownBins.Maximum = new decimal(new int[] {
+            2147483647,
+            0,
+            0,
+            0});
+            this.numericUpDownBins.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownBins.Name = "numericUpDownBins";
+            this.numericUpDownBins.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDownBins.TabIndex = 17;
+            this.numericUpDownBins.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(477, 490);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(82, 13);
+            this.label2.TabIndex = 18;
+            this.label2.Text = "Number of Bins:";
+            // 
             // ToolForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(946, 524);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.numericUpDownBins);
             this.Controls.Add(this.buttonDataManipulation);
             this.Controls.Add(this.testbuttn2);
             this.Controls.Add(this.testbuttn);
@@ -234,6 +274,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownBins)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -254,5 +295,7 @@
         private System.Windows.Forms.Button testbuttn2;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button buttonDataManipulation;
+        private System.Windows.Forms.NumericUpDown numericUpDownBins;
+        private System.Windows.Forms.Label label2;
     }
 }

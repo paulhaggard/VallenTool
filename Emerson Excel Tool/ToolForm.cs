@@ -280,6 +280,8 @@ namespace Emerson_Excel_Tool
 
             excelObject.setVisible(true);
 
+            datasets.Add(new ExcelBinPrinter(FileSelectionListBox.Items.Cast<Dataset>().ToList(), (int)numericUpDownBins.Value));
+
             excelObject.writeData(datasets);
             EmptyTheFileList();
         }

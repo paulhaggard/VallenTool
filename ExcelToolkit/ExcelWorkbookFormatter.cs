@@ -19,7 +19,7 @@ namespace ExcelToolkit
             }
             workbook.Worksheets[1].Name = "Data";
             workbook.Worksheets[1].Cells.Clear();
-            Excel._Worksheet temp = workbook.Worksheets.Add(After: 1);
+            Excel._Worksheet temp = workbook.Worksheets.Add();
             temp.Name = "Frequency Bins";
 
             //FORMATTING
