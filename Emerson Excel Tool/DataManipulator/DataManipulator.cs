@@ -70,11 +70,50 @@ namespace Emerson_Excel_Tool
         /// <summary>
         /// Plots the data provided onto a chart
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="data"></param>
-        private void MrPlotter<T>(IDataManData<T> data)
+        /// <typeparam name="T">The data type of the object</typeparam>
+        /// <param name="data">The data to plot</param>
+        /// <param name="type">The type of chart to create</param>
+        private void MrPlotter<T>(IDataManData<T> data, MrPlotterChartTypes type)
         {
+            pictureBoxCanvas.Image = new Bitmap(pictureBoxCanvas.Width, pictureBoxCanvas.Height);
 
+            Graphics g = Graphics.FromImage(pictureBoxCanvas.Image);
+            lock(g)
+            {
+                Pen p = new Pen(Brushes.Black);
+
+                g.Clear(Color.White);
+                g.DrawLine(p, 0, pictureBoxCanvas.Height - 14, pictureBoxCanvas.Width, pictureBoxCanvas.Height - 14);
+                g.DrawLine(p, 14, 0, 14, pictureBoxCanvas.Height);
+
+                ICollection<Tuple<T, T>> coordinates = data.getData();
+
+                switch(type)
+                {
+                    #region Bar Graph
+                    case MrPlotterChartTypes.BarGraph:
+
+                        // Space between each bar
+                        double spacing = (pictureBoxCanvas.Image.Width - 14) / (coordinates.Count + 1);
+
+                        for(int i = 0; i < coordinates.Count; i++)
+                        {
+                            g.DrawLine(p, (float)(i * spacing + 14), pictureBoxCanvas.Height - 14, (float)(i * spacing + 14), pictureBoxCanvas.Height - 12);
+                            g.DrawString("" + coordinates.ElementAt(i).Item1, SystemFonts.DefaultFont, Brushes.Black, (float)(i * spacing + 14), pictureBoxCanvas.Height - 12);
+                            g.DrawRectangle(p, (float)(i * spacing + 16), pictureBoxCanvas.Height - 0,
+                                (float)(i * spacing + 14), pictureBoxCanvas.Height - 12);
+                        }
+
+                        break;
+                    #endregion
+
+                    default:
+                        break;
+                }
+
+                p.Dispose();
+            }
+            g.Dispose();
         }
 
         #endregion
@@ -84,6 +123,7 @@ namespace Emerson_Excel_Tool
             Dispose();
         }
 
+        /*
         #region Histogram
 
         private void histogramToolStripMenuItem_Click(object sender, EventArgs e)
@@ -96,8 +136,10 @@ namespace Emerson_Excel_Tool
         private void HistoWindow_CompletionEvent(object sender, IDataManData<double> results)
         {
             //TODO plot the histogram
+            MrPlotter(results, MrPlotterChartTypes.BarGraph);
         }
 
         #endregion
+        */
     }
 }

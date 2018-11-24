@@ -42,8 +42,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataFormatting\ChartTypesENUM.cs" />
+    <Compile Include="DataFormatting\IDataManData.cs" />
     <Compile Include="DataFormatting\IExcelData.cs" />
+    <Compile Include="DataFormatting\Manip.cs" />
     <Compile Include="Dataset.cs" />
+    <Compile Include="ExcelBinPrinter.cs" />
     <Compile Include="ExcelPort.cs" />
     <Compile Include="ExcelWorkbookFormatter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

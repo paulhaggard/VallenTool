@@ -74,9 +74,13 @@ namespace ExcelToolkit.Statistics
 
         #region Methods
 
-        public ICollection<double> getData()
+        public ICollection<Tuple<double, double>> getData()
         {
-            return BinData.Cast<double>().ToList();
+            List<Tuple<double, double>> temp = new List<Tuple<double, double>>(BinData.Count);
+            for (int i = 0; i < BinCount; i++)
+                temp.Add(new Tuple<double, double>(bins.ElementAt(i), BinData[i]));
+            return temp;
+
         }
 
         #region Setters
@@ -132,7 +136,7 @@ namespace ExcelToolkit.Statistics
             double binSize = (max - min) / binCount;
 
             for (int i = 0; i < binCount; i++)
-                bins.Add(i * binSize);
+                bins.Add(i * binSize + min);
         }
 
         /// <summary>
