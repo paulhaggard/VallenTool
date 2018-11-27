@@ -17,7 +17,7 @@ namespace Emerson_Excel_Tool
 {
     public partial class ToolForm
     {
-        #region Actions: Remove from Listbox, Multifile add to Listbox, Init Dialogbox, Empty Listbox
+        #region ListBox Actions: Remove, Multifile add, Empty Listbox
 
         /// <summary>
         /// Action to remove items from listbox, including multi-selection
@@ -45,27 +45,48 @@ namespace Emerson_Excel_Tool
             //DialogResult dr = this.openFileDialog1.ShowDialog();
             if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                
+
                 // Read the files
                 foreach (String file in openFileDialog1.FileNames)
                 {
-                    // Create a List Item.
-                    try
-                    {
-                        FileSelectionListBox.Items.Add(file);
-                    }
+                    int i = 0;
+                    if (!FileSelectionListBox. .Contains(file))
+                    {    // Create a List Item.
+                        try
+                        {
+                            var newfile = new FileStats { FileFullPath = file, FileName = "File " + i };
+                            FileSelectionListBox.Items.Add(newfile);
+                            i++;
+                            FileSelectionListBox.TopIndex.ToString();
+                        }
 
-                    catch (Exception ex)
-                    {
-                        // Could not load the file - probably related to Windows file system permissions.            
-                        MessageBox.Show("Cannot display the image: " + file.Substring(file.LastIndexOf('\\'))
-                            + ". You may not have permission to read the file, or " +
-                            "it may be corrupt.\n\nReported error: " + ex.Message);
+                        catch (Exception ex)
+                        {
+                            // Could not load the file - probably related to Windows file system permissions.            
+                            MessageBox.Show("Cannot display the image: " + file.Substring(file.LastIndexOf('\\'))
+                                + ". You may not have permission to read the file, or " +
+                                "it may be corrupt.\n\nReported error: " + ex.Message);
+                        }
                     }
                 }
             }
+            
         }
 
+
+
+        /// <summary>
+        /// To prevent the files list from being executed on twice without emptying list,
+        /// this action clears the list of file locations after the Excel processing is requested.
+        /// </summary>
+        private void EmptyTheFileList()
+        {
+            appFileList.Clear();
+        }
+
+        #endregion
+
+        #region Form Configurators
         /// <summary>
         /// Sets the file Dialog settings appropriately for app.
         /// </summary>
@@ -76,18 +97,10 @@ namespace Emerson_Excel_Tool
             // Allow the user to select multiple images.
             this.openFileDialog1.Multiselect = true;
             this.openFileDialog1.Title = ".txt File Browser";
-
         }
 
-        /// <summary>
-        /// To prevent the files list from being executed on twice without emptying list,
-        /// this action clears the list of file locations after the Excel processing is requested.
-        /// </summary>
-        private void EmptyTheFileList()
-        {
-            testFileList.Clear();
-        }
 
         #endregion
+
     }
 }

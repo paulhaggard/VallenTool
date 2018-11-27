@@ -27,6 +27,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.runExcelProcess = new System.Windows.Forms.Button();
             this.helloWorldLabel = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
@@ -38,12 +39,18 @@
             this.RemoveFilesSelected = new System.Windows.Forms.Button();
             this.aboutBtn = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.dataGridViewer = new System.Windows.Forms.DataGridView();
             this.testbuttn = new System.Windows.Forms.Button();
             this.testbuttn2 = new System.Windows.Forms.Button();
+            this.tagsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.filesListBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewer)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tagsBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.filesListBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // runExcelProcess
@@ -167,6 +174,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.dataGridViewer);
             this.splitContainer1.Panel1.Controls.Add(this.InputText);
             // 
             // splitContainer1.Panel2
@@ -176,13 +184,24 @@
             this.splitContainer1.SplitterDistance = 314;
             this.splitContainer1.TabIndex = 14;
             // 
+            // dataGridViewer
+            // 
+            this.dataGridViewer.AllowUserToAddRows = false;
+            this.dataGridViewer.AllowUserToDeleteRows = false;
+            this.dataGridViewer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewer.Location = new System.Drawing.Point(3, 0);
+            this.dataGridViewer.Name = "dataGridViewer";
+            this.dataGridViewer.Size = new System.Drawing.Size(311, 424);
+            this.dataGridViewer.TabIndex = 7;
+            this.dataGridViewer.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewer_CellContentClick);
+            // 
             // testbuttn
             // 
-            this.testbuttn.Location = new System.Drawing.Point(521, 20);
+            this.testbuttn.Location = new System.Drawing.Point(16, 19);
             this.testbuttn.Name = "testbuttn";
-            this.testbuttn.Size = new System.Drawing.Size(75, 23);
+            this.testbuttn.Size = new System.Drawing.Size(194, 23);
             this.testbuttn.TabIndex = 15;
-            this.testbuttn.Text = "test button";
+            this.testbuttn.Text = "Load DataGrid";
             this.testbuttn.UseVisualStyleBackColor = true;
             this.testbuttn.Click += new System.EventHandler(this.testbuttn_Click);
             // 
@@ -195,6 +214,15 @@
             this.testbuttn2.Text = "test response";
             this.testbuttn2.UseVisualStyleBackColor = true;
             this.testbuttn2.Click += new System.EventHandler(this.testbuttn2_Click);
+            // 
+            // tagsBindingSource
+            // 
+            this.tagsBindingSource.DataMember = "Tags";
+            this.tagsBindingSource.DataSource = this.filesListBindingSource;
+            // 
+            // filesListBindingSource
+            // 
+            this.filesListBindingSource.DataSource = typeof(Emerson_Excel_Tool.FileStats);
             // 
             // ToolForm
             // 
@@ -222,6 +250,9 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewer)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tagsBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.filesListBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -232,7 +263,6 @@
         private System.Windows.Forms.Label helloWorldLabel;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.ListBox FileSelectionListBox;
         private System.Windows.Forms.TextBox InputText;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button openFilesButton;
@@ -241,5 +271,9 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Button testbuttn;
         private System.Windows.Forms.Button testbuttn2;
+        private System.Windows.Forms.DataGridView dataGridViewer;
+        private System.Windows.Forms.BindingSource filesListBindingSource;
+        private System.Windows.Forms.BindingSource tagsBindingSource;
+        private System.Windows.Forms.ListBox FileSelectionListBox;
     }
 }
