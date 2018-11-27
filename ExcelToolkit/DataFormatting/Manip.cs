@@ -29,7 +29,7 @@ namespace ExcelToolkit.DataFormatting
                 if (set.Responses.Max() > max)
                     max = set.Frequencies.Max();
             }
-            double interval = max - min;
+            double interval = (max - min) / numBins;
 
             foreach(Dataset set in data)
             {
