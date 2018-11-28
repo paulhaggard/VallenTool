@@ -35,3 +35,7 @@ G:\Github Repository\VallenTool\Emerson Excel Tool\bin\Debug\ExcelToolkit.dll
 G:\Github Repository\VallenTool\Emerson Excel Tool\bin\Debug\ExcelToolkit.pdb
 G:\Github Repository\VallenTool\Emerson Excel Tool\obj\Debug\Emerson Excel Tool.csproj.CopyComplete
 G:\Github Repository\VallenTool\Emerson Excel Tool\obj\Debug\Emerson_Excel_Tool.DataManipulator.resources
+C:\External\CS code\VallenTool\Emerson Excel Tool\bin\Debug\ExcelToolkit.dll
+C:\External\CS code\VallenTool\Emerson Excel Tool\bin\Debug\ExcelToolkit.pdb
+C:\External\CS code\VallenTool\Emerson Excel Tool\obj\Debug\Emerson_Excel_Tool.DataManipulator.resources
+C:\External\CS code\VallenTool\Emerson Excel Tool\obj\Debug\Emerson Excel Tool.csproj.CopyComplete

@@ -5,3 +5,10 @@ G:\Github Repository\VallenTool\Emerson Excel Tool\ExcelReadOnlyTestbench\obj\De
 G:\Github Repository\VallenTool\Emerson Excel Tool\ExcelReadOnlyTestbench\obj\Debug\ExcelReadOnlyTestbench.csproj.CoreCompileInputs.cache
 G:\Github Repository\VallenTool\Emerson Excel Tool\ExcelReadOnlyTestbench\obj\Debug\ExcelReadOnlyTestbench.exe
 G:\Github Repository\VallenTool\Emerson Excel Tool\ExcelReadOnlyTestbench\obj\Debug\ExcelReadOnlyTestbench.pdb
+C:\External\CS code\VallenTool\Emerson Excel Tool\ExcelReadOnlyTestbench\obj\Debug\ExcelReadOnlyTestbench.csproj.ResolveComReference.cache
+C:\External\CS code\VallenTool\Emerson Excel Tool\ExcelReadOnlyTestbench\obj\Debug\ExcelReadOnlyTestbench.csproj.CoreCompileInputs.cache
+C:\External\CS code\VallenTool\Emerson Excel Tool\ExcelReadOnlyTestbench\obj\Debug\ExcelReadOnlyTestbench.exe
+C:\External\CS code\VallenTool\Emerson Excel Tool\ExcelReadOnlyTestbench\obj\Debug\ExcelReadOnlyTestbench.pdb
+C:\External\CS code\VallenTool\Emerson Excel Tool\ExcelReadOnlyTestbench\bin\Debug\ExcelReadOnlyTestbench.exe.config
+C:\External\CS code\VallenTool\Emerson Excel Tool\ExcelReadOnlyTestbench\bin\Debug\ExcelReadOnlyTestbench.exe
+C:\External\CS code\VallenTool\Emerson Excel Tool\ExcelReadOnlyTestbench\bin\Debug\ExcelReadOnlyTestbench.pdb

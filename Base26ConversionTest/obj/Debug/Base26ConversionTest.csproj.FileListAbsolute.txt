@@ -8,3 +8,13 @@ G:\Github Repository\VallenTool\Base26ConversionTest\obj\Debug\Base26ConversionT
 G:\Github Repository\VallenTool\Base26ConversionTest\obj\Debug\Base26ConversionTest.csproj.CopyComplete
 G:\Github Repository\VallenTool\Base26ConversionTest\obj\Debug\Base26ConversionTest.exe
 G:\Github Repository\VallenTool\Base26ConversionTest\obj\Debug\Base26ConversionTest.pdb
+C:\External\CS code\VallenTool\Base26ConversionTest\bin\Debug\Base26ConversionTest.exe.config
+C:\External\CS code\VallenTool\Base26ConversionTest\bin\Debug\Base26ConversionTest.exe
+C:\External\CS code\VallenTool\Base26ConversionTest\bin\Debug\Base26ConversionTest.pdb
+C:\External\CS code\VallenTool\Base26ConversionTest\bin\Debug\ExcelToolkit.dll
+C:\External\CS code\VallenTool\Base26ConversionTest\bin\Debug\ExcelToolkit.pdb
+C:\External\CS code\VallenTool\Base26ConversionTest\obj\Debug\Base26ConversionTest.csproj.CoreCompileInputs.cache
+C:\External\CS code\VallenTool\Base26ConversionTest\obj\Debug\Base26ConversionTest.csproj.CopyComplete
+C:\External\CS code\VallenTool\Base26ConversionTest\obj\Debug\Base26ConversionTest.exe
+C:\External\CS code\VallenTool\Base26ConversionTest\obj\Debug\Base26ConversionTest.pdb
+C:\External\CS code\VallenTool\Base26ConversionTest\obj\Debug\Base26ConversionTest.csprojAssemblyReference.cache
