@@ -19,7 +19,7 @@ namespace ExcelToolkit.DataFormatting
             List<Dataset> result = new List<Dataset>(numBins);
             for (int i = 0; i < numBins; i++)
                 result.Add(new Dataset());
-            
+
             double min = 2147483647;
             double max = -2147483648;
             foreach(Dataset set in data)
@@ -29,7 +29,7 @@ namespace ExcelToolkit.DataFormatting
                 if (set.Responses.Max() > max)
                     max = set.Frequencies.Max();
             }
-            double interval = (max - min)/numBins;
+            double interval = (max - min) / numBins;
 
             foreach(Dataset set in data)
             {

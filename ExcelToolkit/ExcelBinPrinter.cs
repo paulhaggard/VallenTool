@@ -60,22 +60,23 @@ namespace ExcelToolkit
             string[,] dt = new string[(Data.Count + rowDataLength + 3), columnDataLength + 1];
 
             dt[0, 0] = "Frequency Bin";
-            dt[0, 1] = "X1 Response Data";
+            dt[0, 1] = "Response Average";
+            dt[0, 2] = "X1 Response Data";
 
-            for (int i = 2; i <= columnDataLength; i++)
-                dt[0, i] = "X" + i;
+            for (int i = 3; i <= columnDataLength; i++)
+                dt[0, i] = "X" + (i - 1);
 
-            for (int i = 1; i <= Data.Count; i++)
+            for (int i = 2; i <= Data.Count; i++)
             {
-                dt[i, 0] = "Bin " + i;
+                dt[i, 0] = "Bin " + (i - 1);
 
-                for (int r = 0; r < Data.ElementAt(i - 1).Responses.Count; r++)
-                    dt[i, r + 1] = Data.ElementAt(i - 1).Responses[r].ToString();
+                for (int r = 0; r < Data.ElementAt(i - 2).Responses.Count; r++)
+                    dt[i, r + 1] = Data.ElementAt(i - 2).Responses[r].ToString();
 
-                dt[Data.Count + 2, i - 1] = "Bin " + i;
+                dt[Data.Count + 2, i - 1] = "Bin " + (i - 1);
 
-                for (int f = 0; f < Data.ElementAt(i - 1).Frequencies.Count; f++)
-                    dt[f + Data.Count + 3, i - 1] = Data.ElementAt(i - 1).Frequencies[f].ToString();
+                for (int f = 0; f < Data.ElementAt(i - 2).Frequencies.Count; f++)
+                    dt[f + Data.Count + 3, i - 2] = Data.ElementAt(i - 2).Frequencies[f].ToString();
             }
 
             return dt;
