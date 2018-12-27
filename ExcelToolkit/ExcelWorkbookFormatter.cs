@@ -10,7 +10,7 @@ namespace ExcelToolkit
 {
     public class ExcelWorkbookFormatter : IExcelData
     {
-        public void CreateData(Excel._Workbook workbook, int column_offset, int row_offset)
+        public Excel.Range CreateData(Excel._Workbook workbook, int column_offset, int row_offset)
         {
             // Deletes all but one worksheet from the workbook
             while(workbook.Worksheets.Count > 1)
@@ -33,6 +33,8 @@ namespace ExcelToolkit
             sheet.get_Range("A1", columnLetter + "1").VerticalAlignment =
                 Excel.XlVAlign.xlVAlignCenter;
             sheet.get_Range("A1", columnLetter + "1").ColumnWidth = 18;
+
+            return sheet.get_Range("A1", columnLetter + "1");
         }
 
         public string[,] GetStringData()
