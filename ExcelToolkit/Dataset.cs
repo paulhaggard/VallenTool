@@ -191,6 +191,12 @@ namespace ExcelToolkit
 
         #region Methods
 
+        /// <summary>
+        /// Returns true if the given object is equal to the other, or if the given object is of type Dataset
+        /// Returns true if the Names are the same.
+        /// </summary>
+        /// <param name="obj">Object to compare to</param>
+        /// <returns>Returns true if the objects are equal, returns false otherwise</returns>
         public override bool Equals(object obj)
         {
             return base.Equals(obj) || 
@@ -207,7 +213,7 @@ namespace ExcelToolkit
         /// <returns></returns>
         public static Dataset CreateDataTableFromFile(string _name, string fileLocation)
         {
-            Dataset temp = new Dataset();
+            Dataset temp = new Dataset(name:fileLocation);
 
             StreamReader sr = new StreamReader(fileLocation);
             bool hitHeader = false;
@@ -396,7 +402,7 @@ namespace ExcelToolkit
 
         public override string ToString()
         {
-            return Caption.ToString() + Date.ToShortDateString();
+            return Name + Date.ToShortDateString();
         }
 
         /// <summary>
