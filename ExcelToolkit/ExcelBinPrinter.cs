@@ -41,7 +41,7 @@ namespace ExcelToolkit
             Data = Manip.GenerateFrequencyBins(data, numBins);
         }
 
-        public void CreateData(Excel._Workbook workbook, int column_offset, int row_offset)
+        public Excel.Range CreateData(Excel._Workbook workbook, int column_offset, int row_offset)
         {
             Excel._Worksheet data = workbook.Worksheets["Frequency Bins"];
 
@@ -53,6 +53,8 @@ namespace ExcelToolkit
 
             // Writes the data to excel
             range.Value = GetStringData();
+
+            return range;
         }
 
         public string[,] GetStringData()
