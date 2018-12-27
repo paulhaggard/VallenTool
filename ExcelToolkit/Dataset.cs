@@ -216,7 +216,7 @@ namespace ExcelToolkit
 
         #endregion
 
-        public void CreateData(Excel._Workbook workbook, int column_offset, int row_offset)
+        public virtual Excel.Range CreateData(Excel._Workbook workbook, int column_offset, int row_offset)
         {
             Excel._Worksheet data = workbook.Worksheets["Data"];
 
@@ -228,9 +228,74 @@ namespace ExcelToolkit
             
             // Writes the data to excel
             range.Value = GetStringData();
+            return range;
         }
 
-        public string[,] GetStringData()
+        /// <summary>
+        /// Creates an excel chart from the given data in the given workbook, at the given location.
+        /// </summary>
+        /// <param name="workbook">Workbook to create the chart in.</param>
+        /// <param name="rData">The excel range containing the data for the chart</param>
+        /// <param name="column_offset">Column to place the chart at in column number</param>
+        /// <param name="row_offset">Row to place the chart at as a row number</param>
+        /// <param name="height">[optional] Specifies the height in pixels of the chart (300)</param>
+        /// <param name="width">[optional] Specifies the width in pixels of the chart (300)</param>
+        /// <param name="graphTitle">[optional] Specifies the string title of the chart ("")</param>
+        /// <param name="xAxis">[optional] Specifies the string x Axis title of the chart ("")</param>
+        /// <param name="yAxis">[optional] Specifies the string y Axis title of the chart ("")</param>
+        public virtual void CreateChart(Excel._Workbook workbook, Excel.Range rData, int column_offset, int row_offset,
+            double height = 300, double width = 300, 
+            string graphTitle = "", string xAxis = "", string yAxis = "")
+        {
+            Excel._Worksheet data = workbook.Worksheets["Data"];
+
+            // Gets the range from the current worksheet
+            string columnLetter = ExcelPort.ColumnNumToColumnString(column_offset);
+
+            // Add chart.
+            Excel.ChartObjects charts = data.ChartObjects();
+            Excel.Range origin = data.Range[(columnLetter + row_offset)];
+            Excel.ChartObject chartObject = charts.Add((double)origin.Top, (double)origin.Left, 300, 300);
+            Excel.Chart chart = chartObject.Chart;
+
+            // Sets the chart range
+            Excel.Range range = CreateData(workbook, column_offset, row_offset);
+            chart.SetSourceData(rData);
+
+            // Set chart properties.
+            chart.ChartType = Excel.XlChartType.xlLine;
+            chart.ChartWizard(Source: rData,
+                Title: graphTitle,
+                CategoryTitle: xAxis,
+                ValueTitle: yAxis);
+        }
+
+        /// <summary>
+        /// Creates an excel chart from the given data in the given workbook, at the given location.
+        /// </summary>
+        /// <param name="workbook">Workbook to create the chart in.</param>
+        /// <param name="data_column_offset">The column offset for the data for the chart</param>
+        /// <param name="data_row_offset">The row offset for the data for the chart</param>
+        /// <param name="column_offset">Column to place the chart at in column number</param>
+        /// <param name="row_offset">Row to place the chart at as a row number</param>
+        /// <param name="height">[optional] Specifies the height in pixels of the chart (300)</param>
+        /// <param name="width">[optional] Specifies the width in pixels of the chart (300)</param>
+        /// <param name="graphTitle">[optional] Specifies the string title of the chart ("")</param>
+        /// <param name="xAxis">[optional] Specifies the string x Axis title of the chart ("")</param>
+        /// <param name="yAxis">[optional] Specifies the string y Axis title of the chart ("")</param>
+        public virtual void CreateChart(Excel._Workbook workbook, int data_column_offset, int data_row_offset, int column_offset, int row_offset,
+            double height = 300, double width = 300,
+            string graphTitle = "", string xAxis = "", string yAxis = "")
+        {
+            // Gets the range from the current worksheet
+            string columnLetter = ExcelPort.ColumnNumToColumnString(data_column_offset);
+            Excel.Range range = CreateData(workbook, data_column_offset, data_row_offset);
+
+            // Calls the overloaded function
+            CreateChart(workbook, range, column_offset, row_offset, height, width, graphTitle, xAxis, yAxis);
+        }
+
+        public virtual string[,] GetStringData()
         {
             string[,] dt = new string[14 + Frequencies.Count, 2];
 
