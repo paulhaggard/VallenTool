@@ -43,6 +43,11 @@ namespace ExcelToolkit
 
         public virtual Excel.Range CreateData(Excel._Workbook workbook, int column_offset, int row_offset)
         {
+            return CreateData(workbook, column_offset, row_offset, true);
+        }
+
+        public virtual Excel.Range CreateData(Excel._Workbook workbook, int column_offset, int row_offset, bool createChart = true)
+        {
             Excel._Worksheet data = workbook.Worksheets["Frequency Bins"];
 
             // Gets the range from the current worksheet
@@ -53,6 +58,16 @@ namespace ExcelToolkit
 
             // Writes the data to excel
             range.Value = GetStringData();
+
+            if(createChart)
+            {
+                /* TODO
+                 * Create method to extract XY coordinate pairs from the data.
+                 */
+
+                CreateChart(data, range, 4, 1);
+
+            }
 
             return range;
         }
