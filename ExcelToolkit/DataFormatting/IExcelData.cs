@@ -18,7 +18,8 @@ namespace ExcelToolkit.DataFormatting
         /// <param name="workbook">workbook to write to</param>
         /// <param name="column_offset">column offset (1='a'...)</param>
         /// <param name="row_offset">row offset</param>
-        void CreateData(Excel._Workbook workbook, int column_offset, int row_offset);
+        /// <returns>Returns the range created by this data, that was filled in on the worksheet.</returns>
+        Excel.Range CreateData(Excel._Workbook workbook, int column_offset, int row_offset);
 
         /// <summary>
         /// Gets a string array that represents the data in the dataset
