@@ -71,6 +71,23 @@ namespace ExcelToolkit
         {
             // Gets the range from the current worksheet
             string columnLetter = ExcelPort.ColumnNumToColumnString(column_offset);
+
+            // Add chart.
+            Excel.ChartObjects charts = sheet.ChartObjects();
+            Excel.Range origin = sheet.Range[(columnLetter + row_offset)];
+            Excel.ChartObject chartObject = charts.Add((double)origin.Top, (double)origin.Left, 300, 300);
+            Excel.Chart chart = chartObject.Chart;
+
+            // Sets the chart range
+            chart.SetSourceData(chartData);
+
+            // TODO: You probably need to change the units here
+            // Set chart properties.
+            chart.ChartType = Excel.XlChartType.xlLine;
+            chart.ChartWizard(Source: chartData,
+                Title: "Frequency vs. Responses",
+                CategoryTitle: "Frequency (Hz)",
+                ValueTitle: "Responses (dbm)");
         }
 
         public virtual string[,] GetStringData()
