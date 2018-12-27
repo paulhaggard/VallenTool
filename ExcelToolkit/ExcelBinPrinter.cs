@@ -41,7 +41,7 @@ namespace ExcelToolkit
             Data = Manip.GenerateFrequencyBins(data, numBins);
         }
 
-        public Excel.Range CreateData(Excel._Workbook workbook, int column_offset, int row_offset)
+        public virtual Excel.Range CreateData(Excel._Workbook workbook, int column_offset, int row_offset)
         {
             Excel._Worksheet data = workbook.Worksheets["Frequency Bins"];
 
@@ -57,7 +57,23 @@ namespace ExcelToolkit
             return range;
         }
 
-        public string[,] GetStringData()
+        /// <summary>
+        /// Creates a chart on the given worksheet with the given data, at the given location with the given size
+        /// </summary>
+        /// <param name="sheet">The worksheet to put the chart onto</param>
+        /// <param name="chartData">The data to put into the chart</param>
+        /// <param name="column_offset">The column index to start the chart at</param>
+        /// <param name="row_offset">The row index to start the chart at</param>
+        /// <param name="height">The height of the chart in pixels</param>
+        /// <param name="width">The width of the chart in pixels</param>
+        public void CreateChart(Excel._Worksheet sheet, Excel.Range chartData, 
+            int column_offset, int row_offset, double height = 300, double width = 300)
+        {
+            // Gets the range from the current worksheet
+            string columnLetter = ExcelPort.ColumnNumToColumnString(column_offset);
+        }
+
+        public virtual string[,] GetStringData()
         {
             string[,] dt = new string[(Data.Count + rowDataLength + 3), columnDataLength + 1];
 
