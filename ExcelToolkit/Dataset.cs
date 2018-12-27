@@ -18,6 +18,11 @@ namespace ExcelToolkit
         #region Properties
 
         /// <summary>
+        /// The filename, or just the name, used to load in this dataset and to identify this dataset among others
+        /// </summary>
+        public string Name { get; protected set; } = "";
+
+        /// <summary>
         /// List of Frequencies for the test
         /// </summary>
         public List<double> Frequencies { get; private set; } = new List<double>();
@@ -141,9 +146,56 @@ namespace ExcelToolkit
             Responses = responses ?? new List<double>();
         }
 
+        /// <summary>
+        /// Creates a dataset initialized with the given frequencies and responses
+        /// </summary>
+        /// <param name="name">The unique name identifier given to this dataset, used to compare this dataset to others</param>
+        /// <param name="setup">setup used</param>
+        /// <param name="caption">setup caption used</param>
+        /// <param name="y_axis">y-axis label used</param>
+        /// <param name="x_axis">x-axis label used</param>
+        /// <param name="y_offset">y-offset used</param>
+        /// <param name="minFreq">minimum frequency (Hz)</param>
+        /// <param name="maxFreq">maximum frequency (Hz)</param>
+        /// <param name="stepSize">frequency step-size (Hz)</param>
+        /// <param name="outputAmpVpp">output amplitude Vpp</param>
+        /// <param name="outputAmpRMS">output amplitude RMS</param>
+        /// <param name="channel">channel used</param>
+        /// <param name="date">date of the test</param>
+        /// <param name="frequencies">list of frequencies used</param>
+        /// <param name="responses">list of responses used</param>
+        public Dataset(string name, string setup = "", string caption = "",
+            string y_axis = "", string x_axis = "",
+            double y_offset = 0, double minFreq = 0, double maxFreq = 0, double stepSize = 0,
+            double outputAmpVpp = 0, double outputAmpRMS = 0,
+            int channel = 0, DateTime date = new DateTime(),
+            List<double> frequencies = null, List<double> responses = null)
+        {
+            Name = name;
+            Setup = setup;
+            Caption = caption;
+            Y_Axis = y_axis;
+            X_Axis = x_axis;
+            Y_Offset = y_offset;
+            MinimumFrequency = minFreq;
+            MaximumFrequency = maxFreq;
+            OutputAmplitudeVPP = outputAmpVpp;
+            OutputAmplitudeRMS = outputAmpRMS;
+            AcquisitionChannel = channel;
+            Date = date;
+            Frequencies = frequencies ?? new List<double>();
+            Responses = responses ?? new List<double>();
+        }
+
         #endregion
 
         #region Methods
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj) || 
+                (obj.GetType() == GetType() && Name.Equals(((Dataset)obj).Name));
+        }
 
         #region File IO
 
@@ -231,6 +283,8 @@ namespace ExcelToolkit
             return range;
         }
 
+        #region CreateChart
+
         /// <summary>
         /// Creates an excel chart from the given data in the given workbook, at the given location.
         /// </summary>
@@ -294,6 +348,8 @@ namespace ExcelToolkit
             // Calls the overloaded function
             CreateChart(workbook, range, column_offset, row_offset, height, width, graphTitle, xAxis, yAxis);
         }
+
+        #endregion
 
         public virtual string[,] GetStringData()
         {

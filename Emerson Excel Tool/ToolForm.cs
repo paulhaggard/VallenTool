@@ -121,7 +121,8 @@ namespace Emerson_Excel_Tool
                     try
                     {
                         Dataset d = Dataset.CreateDataTableFromFile("", file);
-                        FileSelectionListBox.Items.Add(d);
+                        if(!FileSelectionListBox.Items.Contains(d))
+                            FileSelectionListBox.Items.Add(d);
                     }
 
                     catch (Exception ex)
